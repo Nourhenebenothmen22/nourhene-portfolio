@@ -22,12 +22,14 @@ export default function ProjectCard({ project, index }) {
         </div>
         <p className="mt-5 line-clamp-6 leading-7 text-slate-700 dark:text-slate-200">{copy.description}</p>
         <div className="mt-auto flex flex-wrap gap-3 pt-6">
-          <a href={project.github} className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 focus:outline-cyan-400 dark:bg-white dark:text-slate-950">
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 focus:outline-cyan-400 dark:bg-white dark:text-slate-950">
             <FaGithub /> {t.projects.buttons.github}
           </a>
-          <a href={project.github} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-bold transition hover:-translate-y-0.5 hover:border-blue-400 focus:outline-cyan-400 dark:border-white/15">
-            <FiExternalLink /> {t.projects.buttons.details}
-          </a>
+          {project.demo && (
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-bold transition hover:-translate-y-0.5 hover:border-blue-400 focus:outline-cyan-400 dark:border-white/15">
+              <FiExternalLink /> {t.projects.buttons.details}
+            </a>
+          )}
         </div>
       </div>
     </motion.article>

@@ -17,14 +17,14 @@ export const projects = [
     key: "elearning",
     image: "/images/projects/elearning-cover.jpg",
     tags: ["PHP", "MySQL", "SQL", "Bootstrap", "HTML", "CSS", "Authentication"],
-    github: "#", // Replace with the E-Learning Platform GitHub repository URL when available.
+    github: "https://github.com/Nourhenebenothmen22/e-leaning",
     youtube: "https://www.youtube.com/@JnounAI",
   },
   {
     key: "tomato",
     image: "/images/projects/tomato-cover.jpg",
     tags: ["MERN Stack", "WebSockets", "Stripe", "Food Delivery", "Real-Time Tracking"],
-    github: "https://github.com/Nourhenebenothmen22",
+    github: "https://github.com/Nourhenebenothmen22/Food_App",
     youtube: "https://www.youtube.com/@JnounAI",
   },
 ];
