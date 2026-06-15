@@ -20,7 +20,6 @@ export default function Hero() {
 
   return (
     <section id="hero" className="professional-bg relative min-h-screen overflow-hidden px-4 pb-12 pt-20 md:pb-10 md:pt-24">
-      <div className="absolute inset-0 -z-10 opacity-[0.08] dark:opacity-[0.1]" style={{ backgroundImage: `url('${publicAsset("/images/hero/hero-bg-ai.jpg")}')`, backgroundSize: "cover", backgroundPosition: "center" }} />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
       <div className="mx-auto grid min-h-[calc(100vh-116px)] max-w-7xl items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center lg:text-start">
