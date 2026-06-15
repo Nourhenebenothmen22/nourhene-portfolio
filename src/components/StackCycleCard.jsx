@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { FiArrowDown, FiArrowRight } from "react-icons/fi";
+import useInView from "../hooks/useInView.js";
 
 const accents = {
   cyan: {
@@ -34,14 +34,13 @@ const positions = [
 export default function StackCycleCard({ cycle, copy, index }) {
   const accent = accents[cycle.accent];
   const CycleIcon = cycle.icon;
+  const [ref, inView] = useInView({ threshold: 0.25 });
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ delay: index * 0.08 }}
-      className={`glass rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${accent.shadow}`}
+    <article
+      ref={ref}
+      className={`animate-in glass rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${accent.shadow} ${inView ? "visible" : ""}`}
+      style={{ transitionDelay: `${index * 0.08}s` }}
     >
       <div className="mb-5 flex items-start gap-4">
         <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${accent.soft}`}>
@@ -55,48 +54,21 @@ export default function StackCycleCard({ cycle, copy, index }) {
 
       <div className="hidden min-h-[330px] sm:block">
         <div className="relative mx-auto h-[310px] max-w-[330px]">
-          <motion.div
-            initial={{ scale: 0.94, opacity: 0.7 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+          <div
             className={`absolute inset-10 rounded-full border ${accent.ring}`}
+            style={{
+              animation: inView ? "pulse-ring 1.4s ease-in-out infinite alternate" : "none",
+            }}
           />
           <div className={`absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br ${accent.line} opacity-15 blur-xl`} />
           {cycle.nodes.map((node, nodeIndex) => {
             const Icon = node.icon;
             return (
-              <motion.div
-                key={node.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 + nodeIndex * 0.06 }}
-                className={`absolute ${positions[nodeIndex]} w-28`}
-              >
-                <div className={`mx-auto flex h-24 w-24 flex-col items-center justify-center rounded-full border bg-white/85 p-2 text-center shadow-lg shadow-slate-900/10 transition hover:-translate-y-1 dark:bg-slate-950/70 ${accent.ring}`}>
-                  <Icon className="mb-1 text-xl text-electric dark:text-cyan-300" />
-                  <span className="text-[11px] font-extrabold leading-tight text-slate-900 dark:text-white">{node.label}</span>
-                </div>
-              </motion.div>
+              <NodeIcon key={node.label} Icon={Icon} label={node.label} position={positions[nodeIndex]} delay={index * 0.08 + nodeIndex * 0.06} accent={accent} />
             );
           })}
           {cycle.nodes.map((node, nodeIndex) => (
-            <motion.span
-              key={`${node.label}-arrow`}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.25 + nodeIndex * 0.05 }}
-              className={`absolute grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br ${accent.line} text-white shadow-md`}
-              style={{
-                left: `${50 + 37 * Math.cos(((nodeIndex * 360) / cycle.nodes.length - 70) * (Math.PI / 180))}%`,
-                top: `${50 + 37 * Math.sin(((nodeIndex * 360) / cycle.nodes.length - 70) * (Math.PI / 180))}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <FiArrowRight className="text-sm" />
-            </motion.span>
+            <ArrowIcon key={`${node.label}-arrow`} nodeIndex={nodeIndex} total={cycle.nodes.length} delay={0.25 + nodeIndex * 0.05} accent={accent} />
           ))}
         </div>
       </div>
@@ -117,6 +89,41 @@ export default function StackCycleCard({ cycle, copy, index }) {
           );
         })}
       </div>
-    </motion.article>
+    </article>
+  );
+}
+
+function NodeIcon({ Icon, label, position, delay, accent }) {
+  const [ref, inView] = useInView({ threshold: 0, triggerOnce: true });
+  return (
+    <div
+      ref={ref}
+      className={`absolute ${position} w-28 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
+      style={{ transition: "opacity 0.3s ease-out, transform 0.3s ease-out", transitionDelay: `${delay}s` }}
+    >
+      <div className={`mx-auto flex h-24 w-24 flex-col items-center justify-center rounded-full border bg-white/85 p-2 text-center shadow-lg shadow-slate-900/10 transition hover:-translate-y-1 dark:bg-slate-950/70 ${accent.ring}`}>
+        <Icon className="mb-1 text-xl text-electric dark:text-cyan-300" />
+        <span className="text-[11px] font-extrabold leading-tight text-slate-900 dark:text-white">{label}</span>
+      </div>
+    </div>
+  );
+}
+
+function ArrowIcon({ nodeIndex, total, delay, accent }) {
+  const [ref, inView] = useInView({ threshold: 0, triggerOnce: true });
+  return (
+    <span
+      ref={ref}
+      className={`absolute grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br ${accent.line} text-white shadow-md ${inView ? "opacity-100" : "opacity-0"}`}
+      style={{
+        left: `${50 + 37 * Math.cos(((nodeIndex * 360) / total - 70) * (Math.PI / 180))}%`,
+        top: `${50 + 37 * Math.sin(((nodeIndex * 360) / total - 70) * (Math.PI / 180))}%`,
+        transform: "translate(-50%, -50%)",
+        transition: "opacity 0.3s ease-out",
+        transitionDelay: `${delay}s`,
+      }}
+    >
+      <FiArrowRight className="text-sm" />
+    </span>
   );
 }
