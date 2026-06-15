@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://Nourhenebenothmen22.github.io/nourhene-portfolio/sitemap.xml
