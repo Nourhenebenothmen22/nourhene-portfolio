@@ -4,7 +4,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
 
 // Replace nourhene-profile.jpg with the real image filename if you change the portfolio image asset.
-const portfolioImage = "/image-portfolio/nourhene-profile.jpg";
+const portfolioImage = "/image-portfolio/nourhene-profile.webp";
 
 export default function IntroShow({ onComplete }) {
   const { t } = useLanguage();

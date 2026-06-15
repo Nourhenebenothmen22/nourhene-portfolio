@@ -5,7 +5,7 @@ import { profileData } from "../data/profile.js";
 import { publicAsset } from "../utils/publicAsset.js";
 
 // Replace nourhene-profile.jpg with the real image filename if you change the logo asset.
-const logoImage = "/image-portfolio/nourhene-profile.jpg";
+const logoImage = "/image-portfolio/nourhene-profile.webp";
 const languageCodes = ["fr", "en", "ar"];
 
 export default function Navbar() {

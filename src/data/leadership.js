@@ -1,7 +1,7 @@
 const images = {
-  techbridge: "/images/Leaderships/TechBridge.jpg",
-  ieeeStudentBranch: "/images/Leaderships/IEEE_iTeam_SB.jpg",
-  ieeeComputerSociety: "/images/Leaderships/IEEE_CS_CHAPTER_iTeam_SB.jpg",
+  techbridge: "/images/Leaderships/TechBridge.webp",
+  ieeeStudentBranch: "/images/Leaderships/IEEE_iTeam_SB.webp",
+  ieeeComputerSociety: "/images/Leaderships/IEEE_CS_CHAPTER_iTeam_SB.webp",
 };
 
 export const leadershipItems = [

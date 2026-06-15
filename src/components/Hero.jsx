@@ -12,7 +12,7 @@ const links = {
   youtube: "https://www.youtube.com/@JnounAI",
 };
 
-const profileImage = "/image-portfolio/nourhene-profile.jpg";
+const profileImage = "/image-portfolio/nourhene-profile.webp";
 
 export default function Hero() {
   const { language, t } = useLanguage();
