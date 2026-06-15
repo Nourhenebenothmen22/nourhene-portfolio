@@ -158,6 +158,77 @@ textarea {
     linear-gradient(180deg, #050813 0%, #0b1730 72%, #050813 100%);
 }
 
+.animate-in {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.animate-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-in-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.animate-in-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.animate-in-left {
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.animate-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-in-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.animate-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-progress {
+  width: 0 !important;
+  transition: width 0.85s ease-out;
+}
+
+.animate-progress.visible {
+  width: var(--progress-width) !important;
+}
+
+@keyframes intro-ring {
+  0% { opacity: 0; scale: 0.7; }
+  50% { opacity: 0.7; scale: 1.12; }
+  100% { opacity: 0.15; scale: 1.45; }
+}
+
+@keyframes intro-glow {
+  0% { opacity: 0; }
+  60% { opacity: 0.7; }
+  100% { opacity: 0.35; }
+}
+
+@keyframes intro-content {
+  0% { opacity: 0; scale: 0.86; filter: blur(10px); }
+  70% { scale: 1.04; }
+  100% { opacity: 1; scale: 1; filter: blur(0); }
+}
+
 @media (max-width: 768px) {
   .section-shell {
     width: min(100% - 24px, 1180px);
