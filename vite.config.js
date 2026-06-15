@@ -9,10 +9,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("node_modules/framer-motion")) return "vendor-motion";
           if (id.includes("node_modules/react-icons")) return "vendor-icons";
           if (id.includes("node_modules/react-toastify")) return "vendor-toastify";
-          if (id.includes("node_modules/react-dom")) return "vendor-react";
+          if (id.includes("node_modules/react-dom") || id.includes("node_modules/react/")) return "vendor-react";
           if (id.includes("node_modules/@emailjs")) return "vendor-emailjs";
           if (id.includes("node_modules")) return "vendor-other";
         },
@@ -24,6 +23,7 @@ export default defineConfig({
     sourcemap: false,
     assetsInlineLimit: 4096,
     reportCompressedSize: false,
-    chunkSizeWarningLimit: 200,
+    chunkSizeWarningLimit: 500,
+    modulePreload: false,
   },
 });
