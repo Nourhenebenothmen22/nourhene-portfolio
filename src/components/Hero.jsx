@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FaEnvelope, FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import { FiArrowDown, FiDownload } from "react-icons/fi";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -17,15 +16,12 @@ const profileImage = "/image-portfolio/nourhene-profile.webp";
 export default function Hero() {
   const { language, t } = useLanguage();
   const profile = profileData[language];
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => { setMounted(true); }, []);
 
   return (
     <section id="hero" className="professional-bg relative min-h-screen overflow-hidden px-4 pb-12 pt-20 md:pb-10 md:pt-24">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
       <div className="mx-auto grid min-h-[calc(100vh-116px)] max-w-7xl items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className={`animate-in text-center lg:text-start ${mounted ? "visible" : ""}`}>
+        <div className="text-center lg:text-start" style={{ animation: "heroFadeUp 0.55s ease-out 0.1s forwards" }}>
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-electric dark:text-cyan-300">{t.sections.aboutEyebrow}</p>
           <p className="mb-4 text-base font-extrabold text-slate-950 dark:text-white">{profile.name}</p>
           <h1 className="max-w-4xl text-3xl font-extrabold leading-tight text-slate-950 dark:text-white md:text-5xl">{t.hero.title}</h1>
@@ -50,7 +46,7 @@ export default function Hero() {
             ))}
           </div>
         </div>
-        <div className={`animate-in-scale mx-auto grid w-full max-w-[360px] place-items-center lg:mx-0 lg:justify-self-end ${mounted ? "visible" : ""}`} style={{ transitionDelay: "0.25s" }}>
+        <div className="mx-auto grid w-full max-w-[360px] place-items-center lg:mx-0 lg:justify-self-end" style={{ animation: "heroScaleIn 0.55s ease-out 0.25s forwards" }}>
           <div className="avatar-float relative h-64 w-64 rounded-full md:h-80 md:w-80">
             <div className="avatar-ring absolute -inset-3 rounded-full bg-gradient-to-br from-blue-500 via-cyan-400 to-violet-500 opacity-80 blur-[1px]" />
             <div className="absolute -inset-6 rounded-full bg-cyan-400/10 blur-2xl dark:bg-cyan-300/10" />
