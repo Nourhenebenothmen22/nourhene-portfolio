@@ -1,23 +1,22 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { FaAward } from "react-icons/fa6";
 import SectionHeader from "./SectionHeader.jsx";
 import { leadershipItems } from "../data/leadership.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
+import useInView from "../hooks/useInView.js";
 
 function LeadershipCard({ item, index }) {
   const { t } = useLanguage();
   const [failed, setFailed] = useState(false);
+  const [ref, inView] = useInView({ threshold: 0.25 });
   const copy = t.leadership.items[item.key];
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ delay: index * 0.08 }}
-      className="glass glow-border group flex h-full flex-col overflow-hidden rounded-3xl p-3 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25"
+    <article
+      ref={ref}
+      className={`animate-in glass glow-border group flex h-full flex-col overflow-hidden rounded-3xl p-3 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25 ${inView ? "visible" : ""}`}
+      style={{ transitionDelay: `${index * 0.08}s` }}
     >
       <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200/70 bg-gradient-to-br from-white via-blue-50 to-violet-50 p-5 shadow-inner shadow-slate-900/5 dark:border-white/10 dark:from-slate-950 dark:via-navy dark:to-violet-950 dark:shadow-black/20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,0.18),transparent_34%),radial-gradient(circle_at_75%_70%,rgba(124,58,237,0.16),transparent_36%)]" />
@@ -46,7 +45,7 @@ function LeadershipCard({ item, index }) {
         <h3 className="mt-4 text-xl font-extrabold leading-tight text-slate-950 dark:text-white">{copy.title}</h3>
         <p className="mt-4 leading-7 text-slate-700 dark:text-slate-200">{copy.description}</p>
       </div>
-    </motion.article>
+    </article>
   );
 }
 
