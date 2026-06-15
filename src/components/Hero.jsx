@@ -18,7 +18,7 @@ export default function Hero() {
   const profile = profileData[language];
 
   return (
-    <section id="hero" className="professional-bg relative grid min-h-screen overflow-hidden px-4 pb-12 pt-20 md:pb-10 md:pt-24">
+    <section id="hero" className="professional-bg relative flex min-h-dvh flex-col justify-center px-4 pt-24 pb-12 md:pb-10">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
       <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="text-center lg:text-start">
