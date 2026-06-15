@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext.jsx";
 import { useTheme } from "./context/ThemeContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";

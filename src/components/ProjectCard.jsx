@@ -10,7 +10,7 @@ export default function ProjectCard({ project, index }) {
   return (
     <motion.article initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.05 }} className="group glass flex h-full flex-col overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25">
       <div className="relative aspect-video overflow-hidden rounded-t-3xl bg-slate-100 dark:bg-slate-950">
-        <img src={publicAsset(project.image)} alt={`${t.projects.alt} ${copy.title}`} className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.025]" />
+        <img src={publicAsset(project.image)} alt={`${t.projects.alt} ${copy.title}`} loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.025]" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
       </div>
       <div className="flex flex-1 flex-col p-6">

@@ -25,6 +25,8 @@ function LeadershipCard({ item, index }) {
           <img
             src={publicAsset(item.image)}
             alt={`${t.leadership.imageAlt} ${copy.title}`}
+            loading="lazy"
+            decoding="async"
             onError={() => setFailed(true)}
             className="relative z-10 h-full w-full rounded-xl object-contain object-center drop-shadow-[0_18px_24px_rgba(15,23,42,0.12)] transition duration-500 group-hover:scale-[1.035] dark:drop-shadow-[0_18px_28px_rgba(0,0,0,0.35)]"
           />
