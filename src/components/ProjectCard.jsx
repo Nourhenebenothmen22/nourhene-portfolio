@@ -1,14 +1,20 @@
 import { FaGithub } from "react-icons/fa6";
 import { FiExternalLink } from "react-icons/fi";
-import { motion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
+import useInView from "../hooks/useInView.js";
 
 export default function ProjectCard({ project, index }) {
   const { t } = useLanguage();
   const copy = t.projects.items[project.key];
+  const [ref, inView] = useInView({ threshold: 0.25 });
+
   return (
-    <motion.article initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.05 }} className="group glass flex h-full flex-col overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25">
+    <article
+      ref={ref}
+      className={`animate-in group glass flex h-full flex-col overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25 ${inView ? "visible" : ""}`}
+      style={{ transitionDelay: `${index * 0.05}s` }}
+    >
       <div className="relative aspect-video overflow-hidden rounded-t-3xl bg-slate-100 dark:bg-slate-950">
         <img src={publicAsset(project.image)} alt={`${t.projects.alt} ${copy.title}`} loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.025]" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
@@ -32,6 +38,6 @@ export default function ProjectCard({ project, index }) {
           )}
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

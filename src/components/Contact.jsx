@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { FiCalendar, FiDollarSign, FiFileText, FiList, FiMail, FiMessageSquare, FiPhone, FiSend, FiUser } from "react-icons/fi";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { contactData } from "../data/contact.js";
 import { sendContactEmail } from "../utils/sendContactEmail.js";
+import useInView from "../hooks/useInView.js";
 
 const initialForm = {
   name: "",
@@ -29,12 +29,13 @@ function sanitize(value) {
 
 function ContactField({ icon: Icon, label, error, children, index }) {
   return (
-    <motion.label
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
-      transition={{ delay: index * 0.04, duration: 0.42 }}
+    <label
       className="block"
+      style={{
+        opacity: 0,
+        transform: "translateY(14px)",
+        animation: `fadeInUp 0.42s ${index * 0.04}s forwards`,
+      }}
     >
       <span className="mb-2 flex items-center gap-2 text-sm font-extrabold text-slate-800 dark:text-slate-100">
         <Icon className="text-cyan-600 dark:text-cyan-300" aria-hidden="true" />
@@ -42,7 +43,7 @@ function ContactField({ icon: Icon, label, error, children, index }) {
       </span>
       {children}
       {error && <span className="mt-2 block text-sm font-semibold text-red-600 dark:text-red-300">{error}</span>}
-    </motion.label>
+    </label>
   );
 }
 
@@ -52,6 +53,8 @@ export default function Contact() {
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [isSending, setIsSending] = useState(false);
+  const [sectionRef, sectionInView] = useInView({ threshold: 0.2 });
+  const [formRef, formInView] = useInView({ threshold: 0.2 });
 
   const sanitizedForm = useMemo(
     () => ({
@@ -127,38 +130,26 @@ export default function Contact() {
   return (
     <section id="contact" dir={dir} className="bg-slate-50 dark:bg-navy/80">
       <div className="section-shell">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.65, ease: "easeOut" }}
-          className="grid items-start gap-8 lg:grid-cols-[0.82fr_1.18fr]"
+        <div
+          ref={sectionRef}
+          className={`animate-in grid items-start gap-8 lg:grid-cols-[0.82fr_1.18fr] ${sectionInView ? "visible" : ""}`}
         >
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.55 }}
-            className="relative overflow-hidden rounded-3xl p-2 lg:sticky lg:top-28"
-          >
+          <div className="relative overflow-hidden rounded-3xl p-2 lg:sticky lg:top-28">
             <div className="absolute -left-12 top-8 h-32 w-32 rounded-full bg-cyan-300/20 blur-3xl dark:bg-cyan-300/10" />
             <div className="absolute bottom-6 right-4 h-24 w-24 rounded-full bg-violet-400/20 blur-3xl dark:bg-violet-400/10" />
             <div className="relative border-s-4 border-cyan-400 ps-6">
-              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-600 dark:text-cyan-300">{copy.title}</p>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-600 dark:text-cyan-300">{copy.eyebrow}</p>
               <h2 className="max-w-xl text-3xl font-bold leading-tight text-slate-950 dark:text-white md:text-5xl">{copy.title}</h2>
               <p className="mt-5 max-w-xl leading-8 text-slate-700 dark:text-slate-200">{copy.subtitle}</p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.form
-            initial={{ opacity: 0, y: 26 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.58, delay: 0.12 }}
+          <form
+            ref={formRef}
             onSubmit={handleSubmit}
             noValidate
-            whileHover={{ y: -4 }}
-            className="glass glow-border relative overflow-hidden rounded-3xl p-6 shadow-2xl shadow-blue-500/10 transition duration-300 hover:shadow-violet-500/15 dark:shadow-black/25 dark:hover:shadow-cyan-500/10 md:p-8"
+            className={`glass glow-border relative overflow-hidden rounded-3xl p-6 shadow-2xl shadow-blue-500/10 transition duration-300 hover:shadow-violet-500/15 dark:shadow-black/25 dark:hover:shadow-cyan-500/10 md:p-8 ${formInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+            style={{ transition: "opacity 0.58s ease-out, transform 0.58s ease-out", transitionDelay: "0.12s" }}
           >
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-violet-600" />
             <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-cyan-300/15 blur-3xl dark:bg-cyan-300/10" />
@@ -217,18 +208,16 @@ export default function Contact() {
               </ContactField>
             </div>
 
-            <motion.button
+            <button
               type="submit"
               disabled={isSending}
-              whileHover={!isSending ? { y: -2 } : undefined}
-              whileTap={!isSending ? { scale: 0.98 } : undefined}
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 via-cyan-500 to-violet-600 px-6 py-4 font-extrabold text-white shadow-lg shadow-blue-500/25 transition hover:shadow-xl hover:shadow-violet-500/25 disabled:cursor-not-allowed disabled:opacity-65"
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 via-cyan-500 to-violet-600 px-6 py-4 font-extrabold text-white shadow-lg shadow-blue-500/25 transition hover:shadow-xl hover:shadow-violet-500/25 hover:-translate-y-0.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-65"
             >
               <FiSend aria-hidden="true" />
               {isSending ? copy.sending : copy.submit}
-            </motion.button>
-          </motion.form>
-        </motion.div>
+            </button>
+          </form>
+        </div>
       </div>
     </section>
   );

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
 
-// Replace nourhene-profile.jpg with the real image filename if you change the portfolio image asset.
 const portfolioImage = "/image-portfolio/nourhene-profile.webp";
 
 export default function IntroShow({ onComplete }) {
@@ -20,41 +18,37 @@ export default function IntroShow({ onComplete }) {
   }, [onComplete]);
 
   return (
-    <motion.div
-      animate={{ opacity: leaving ? 0 : 1, scale: leaving ? 1.02 : 1 }}
-      transition={{ duration: 0.65, ease: "easeInOut" }}
+    <div
       className="fixed inset-0 z-[100] overflow-hidden bg-ink text-white"
+      style={{
+        opacity: leaving ? 0 : 1,
+        scale: leaving ? 1.02 : 1,
+        transition: "opacity 0.65s ease-in-out, scale 0.65s ease-in-out",
+      }}
       role="status"
       aria-label={t.loadingLabel}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(37,99,235,0.22),transparent_34%),radial-gradient(circle_at_50%_55%,rgba(124,58,237,0.16),transparent_42%)]" />
-      <motion.div
+      <div
         className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/15"
-        initial={{ opacity: 0, scale: 0.7 }}
-        animate={{ opacity: [0, 0.7, 0.15], scale: [0.7, 1.12, 1.45] }}
-        transition={{ duration: 2.8, ease: "easeOut" }}
+        style={{ animation: "intro-ring 2.8s ease-out forwards" }}
       />
-      <motion.div
+      <div
         className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-3xl"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0.7, 0.35] }}
-        transition={{ duration: 2.7, ease: "easeInOut" }}
+        style={{ animation: "intro-glow 2.7s ease-in-out forwards" }}
       />
       <div className="absolute left-1/2 top-1/2 w-[min(360px,82vw)] -translate-x-1/2 -translate-y-1/2">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.86, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: [0.86, 1.04, 1], filter: "blur(0px)" }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+        <div
           className="relative mx-auto h-40 w-40 overflow-hidden rounded-full border border-cyan-300/25 bg-white/5 p-1 shadow-2xl shadow-cyan-950/40 md:h-52 md:w-52"
+          style={{ animation: "intro-content 1.5s ease-out forwards" }}
         >
-          <motion.div
+          <div
             className="absolute -inset-1 rounded-full bg-gradient-to-br from-blue-500 via-cyan-300 to-violet-500 opacity-60"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 4, ease: "linear" }}
+            style={{ animation: "avatar-ring 4s linear infinite" }}
           />
           <img src={publicAsset(portfolioImage)} alt={t.hero.imageAlt} className="relative h-full w-full rounded-full object-cover" />
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
