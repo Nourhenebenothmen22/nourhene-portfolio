@@ -7,6 +7,17 @@ const heroProfileImage = "/image-portfolio/nourhene-profile.webp";
 const LOADER_DURATION = 5500;
 const MAX_DURATION = 7500;
 
+const STEPS = [
+  { threshold: 0, label: "Initializing portfolio" },
+  { threshold: 15, label: "Loading identity" },
+  { threshold: 30, label: "Preparing skills" },
+  { threshold: 45, label: "Organizing projects" },
+  { threshold: 60, label: "Syncing experience" },
+  { threshold: 75, label: "Optimizing interface" },
+  { threshold: 90, label: "Preparing hero section" },
+  { threshold: 100, label: "Portfolio ready" },
+];
+
 export default function LoadingShow({ onComplete }) {
   const { t } = useLanguage();
   const prefersReduced = useReducedMotion();
@@ -18,6 +29,11 @@ export default function LoadingShow({ onComplete }) {
   const safetyTimerRef = useRef(null);
 
   const shouldAnimate = !prefersReduced;
+
+  let activeIndex = 0;
+  for (let i = 0; i < STEPS.length; i++) {
+    if (progress >= STEPS[i].threshold) activeIndex = i;
+  }
 
   useEffect(() => {
     const img = new Image();
@@ -71,7 +87,7 @@ export default function LoadingShow({ onComplete }) {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink text-white"
       initial={shouldAnimate ? { opacity: 0 } : { opacity: 1 }}
       animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }}
-      exit={shouldAnimate ? { opacity: 0, scale: 1.02, filter: "blur(2px)", transition: { duration: 0.35, ease: "easeInOut" } } : { opacity: 0, transition: { duration: 0.1 } }}
+      exit={shouldAnimate ? { opacity: 0, scale: 1.02, filter: "blur(2px)", transition: { duration: 0.3, ease: "easeInOut" } } : { opacity: 0, transition: { duration: 0.1 } }}
       role="progressbar"
       aria-label={t.loadingLabel}
       aria-valuenow={progress}
@@ -88,22 +104,8 @@ export default function LoadingShow({ onComplete }) {
 
       <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
 
-      <div className="relative z-10 flex flex-col items-center gap-8">
-        <motion.div
-          initial={shouldAnimate ? { opacity: 0, scale: 0.86, filter: "blur(10px)" } : {}}
-          animate={shouldAnimate ? { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut", delay: 0.1 } } : {}}
-          className="relative h-28 w-28 overflow-hidden rounded-full border border-cyan-300/25 bg-white/5 p-1 shadow-2xl shadow-cyan-950/40 md:h-36 md:w-36"
-        >
-          <div className="absolute -inset-1 z-[1] rounded-full bg-gradient-to-br from-blue-500 via-cyan-300 to-violet-500 opacity-60" />
-          <div className="absolute -inset-1 z-[2] rounded-full bg-ink" style={{ clipPath: "inset(2px)" }} />
-          <img
-            src={publicAsset(heroProfileImage)}
-            alt={t.hero.imageAlt}
-            className="relative z-[3] h-full w-full rounded-full object-cover"
-          />
-        </motion.div>
-
-        <div className="flex flex-col items-center gap-4">
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center gap-10 px-6">
+        <div className="text-center">
           <div className="text-6xl font-extralight tabular-nums tracking-tight md:text-7xl">
             <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-violet-400 bg-clip-text text-transparent">
               {progress}
@@ -111,20 +113,57 @@ export default function LoadingShow({ onComplete }) {
             <span className="text-3xl text-white/40 md:text-4xl">%</span>
           </div>
 
-          <div className="h-[2px] w-48 overflow-hidden rounded-full bg-white/10 md:w-72">
+          <div className="mx-auto mt-4 h-[2px] w-48 overflow-hidden rounded-full bg-white/10 md:w-72">
             <div
               className="h-full rounded-full bg-gradient-to-r from-blue-500 via-cyan-400 to-violet-500"
               style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
             />
           </div>
+        </div>
 
-          <motion.p
-            initial={shouldAnimate ? { opacity: 0 } : { opacity: 0.5 }}
-            animate={shouldAnimate ? { opacity: 0.5, transition: { delay: 0.8, duration: 0.6 } } : { opacity: 0.5 }}
-            className="text-xs tracking-[0.25em] uppercase text-white/50"
-          >
-            {progress < 100 ? t.intro[0] : t.intro[3]}
-          </motion.p>
+        <div className="flex w-full flex-col">
+          {STEPS.map((step, i) => {
+            const isActive = i === activeIndex;
+            const isCompleted = i < activeIndex;
+
+            return (
+              <div key={step.threshold} className="flex items-start gap-3 py-1.5">
+                <div className="flex flex-col items-center pt-1">
+                  <motion.div
+                    className={`h-2.5 w-2.5 rounded-full border transition-colors duration-300 ${
+                      isActive
+                        ? "border-cyan-400 bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                        : isCompleted
+                          ? "border-blue-500 bg-blue-500"
+                          : "border-white/20 bg-transparent"
+                    }`}
+                    animate={shouldAnimate && isActive ? { scale: [1, 1.35, 1] } : {}}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  />
+                  {i < STEPS.length - 1 && (
+                    <div
+                      className={`mt-0.5 h-4 w-px transition-colors duration-300 ${
+                        isCompleted ? "bg-blue-500/40" : "bg-white/10"
+                      }`}
+                    />
+                  )}
+                </div>
+                <motion.span
+                  className={`text-sm leading-6 transition-colors duration-300 ${
+                    isActive
+                      ? "font-semibold text-white"
+                      : isCompleted
+                        ? "text-white/60"
+                        : "text-white/30"
+                  }`}
+                  animate={shouldAnimate && isActive ? { x: [3, 0] } : {}}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  {step.label}
+                </motion.span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
