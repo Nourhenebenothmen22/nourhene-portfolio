@@ -1,3 +1,4 @@
+import { useReducedMotion } from "framer-motion";
 import { FaGithub } from "react-icons/fa6";
 import { FiExternalLink } from "react-icons/fi";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -7,12 +8,14 @@ import useInView from "../hooks/useInView.js";
 export default function ProjectCard({ project, index }) {
   const { t } = useLanguage();
   const copy = t.projects.items[project.key];
+  const prefersReduced = useReducedMotion();
   const [ref, inView] = useInView({ threshold: 0.25 });
+  const show = prefersReduced || inView;
 
   return (
     <article
       ref={ref}
-      className={`animate-in group glass flex h-full flex-col overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25 ${inView ? "visible" : ""}`}
+      className={`animate-in group glass flex h-full flex-col overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25 ${show ? "visible" : ""}`}
       style={{ transitionDelay: `${index * 0.05}s` }}
     >
       <div className="relative aspect-video overflow-hidden rounded-t-3xl bg-slate-100 dark:bg-slate-950">

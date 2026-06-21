@@ -1,3 +1,4 @@
+import { useReducedMotion } from "framer-motion";
 import { FiArrowDown, FiArrowRight } from "react-icons/fi";
 import useInView from "../hooks/useInView.js";
 
@@ -34,12 +35,14 @@ const positions = [
 export default function StackCycleCard({ cycle, copy, index }) {
   const accent = accents[cycle.accent];
   const CycleIcon = cycle.icon;
+  const prefersReduced = useReducedMotion();
   const [ref, inView] = useInView({ threshold: 0.25 });
+  const show = prefersReduced || inView;
 
   return (
     <article
       ref={ref}
-      className={`animate-in glass rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${accent.shadow} ${inView ? "visible" : ""}`}
+      className={`animate-in glass rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${accent.shadow} ${show ? "visible" : ""}`}
       style={{ transitionDelay: `${index * 0.08}s` }}
     >
       <div className="mb-5 flex items-start gap-4">
@@ -57,7 +60,7 @@ export default function StackCycleCard({ cycle, copy, index }) {
           <div
             className={`absolute inset-10 rounded-full border ${accent.ring}`}
             style={{
-              animation: inView ? "pulse-ring 1.4s ease-in-out infinite alternate" : "none",
+              animation: show ? "pulse-ring 1.4s ease-in-out infinite alternate" : "none",
             }}
           />
           <div className={`absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br ${accent.line} opacity-15 blur-xl`} />

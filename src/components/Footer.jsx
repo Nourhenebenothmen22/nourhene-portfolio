@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from "framer-motion";
 import { FaEnvelope, FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { profileData } from "../data/profile.js";
@@ -5,9 +6,16 @@ import { profileData } from "../data/profile.js";
 export default function Footer() {
   const { language } = useLanguage();
   const profile = profileData[language];
+  const prefersReduced = useReducedMotion();
 
   return (
-    <footer className="border-t border-slate-200 bg-white py-8 dark:border-white/10 dark:bg-ink">
+    <motion.footer
+      initial={!prefersReduced ? { opacity: 0, y: 16 } : {}}
+      whileInView={!prefersReduced ? { opacity: 1, y: 0 } : {}}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+      className="border-t border-slate-200 bg-white py-8 dark:border-white/10 dark:bg-ink"
+    >
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center md:flex-row md:text-start">
         <p className="font-semibold text-slate-700 dark:text-slate-300">
           {profile.name} © 2026 — {profile.footerRole}
@@ -25,6 +33,6 @@ export default function Footer() {
           ))}
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
