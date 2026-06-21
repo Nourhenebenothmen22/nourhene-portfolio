@@ -19,14 +19,6 @@ const Contact = lazy(() => import("./components/Contact.jsx"));
 const Footer = lazy(() => import("./components/Footer.jsx"));
 const ToastContainer = lazy(() => import("react-toastify").then((m) => ({ default: m.ToastContainer })));
 
-function SectionsFallback() {
-  return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent" />
-    </div>
-  );
-}
-
 function Portfolio() {
   const [introDone, setIntroDone] = useState(false);
   const { language, dir } = useLanguage();
@@ -42,6 +34,15 @@ function Portfolio() {
 
   useEffect(() => {
     import("./components/Hero.jsx");
+    import("./components/Skills.jsx");
+    import("./components/Projects.jsx");
+    import("./components/Experience.jsx");
+    import("./components/Education.jsx");
+    import("./components/Languages.jsx");
+    import("./components/Leadership.jsx");
+    import("./components/Contact.jsx");
+    import("./components/Footer.jsx");
+    import("react-toastify");
   }, []);
 
   return (
@@ -53,7 +54,7 @@ function Portfolio() {
         <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-950 transition-colors duration-500 dark:bg-ink dark:text-white">
           <Navbar />
           <main>
-            <Suspense fallback={<SectionsFallback />}>
+            <Suspense fallback={null}>
               <Hero />
               <Skills />
               <Projects />
@@ -64,21 +65,17 @@ function Portfolio() {
               <Contact />
             </Suspense>
           </main>
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-          <Suspense fallback={null}>
-            <ToastContainer
-              position={language === "ar" ? "top-left" : "top-right"}
-              autoClose={2500}
-              hideProgressBar={false}
-              closeOnClick
-              pauseOnHover
-              draggable
-              theme={theme === "dark" ? "dark" : "light"}
-              rtl={language === "ar"}
-            />
-          </Suspense>
+          <Footer />
+          <ToastContainer
+            position={language === "ar" ? "top-left" : "top-right"}
+            autoClose={2500}
+            hideProgressBar={false}
+            closeOnClick
+            pauseOnHover
+            draggable
+            theme={theme === "dark" ? "dark" : "light"}
+            rtl={language === "ar"}
+          />
         </div>
       )}
     </>
