@@ -4,9 +4,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
 
 const heroProfileImage = "/image-portfolio/nourhene-profile.webp";
-const INTRO_DURATION = 5000;
-const SHORT_DURATION = 2000;
-const MAX_DURATION = 4000;
+const DURATION = 4000;
 
 export default function ProfileIntro({ onComplete }) {
   const { t } = useLanguage();
@@ -21,13 +19,6 @@ export default function ProfileIntro({ onComplete }) {
   useEffect(() => {
     onCompleteRef.current = onComplete;
   });
-
-  const [isReturning] = useState(() => !!localStorage.getItem("op_intro_seen"));
-  const DURATION = isReturning ? SHORT_DURATION : INTRO_DURATION;
-
-  useEffect(() => {
-    localStorage.setItem("op_intro_seen", "1");
-  }, []);
 
   useEffect(() => {
     const restore = [];
