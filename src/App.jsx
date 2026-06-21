@@ -5,7 +5,7 @@ import { LanguageProvider, useLanguage } from "./context/LanguageContext.jsx";
 import { useTheme } from "./context/ThemeContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { profileData } from "./data/profile.js";
-import CommandPaletteIntro from "./components/IntroShow.jsx";
+import ProfileIntro from "./components/IntroShow.jsx";
 import Navbar from "./components/Navbar.jsx";
 
 const Hero = lazy(() => import("./components/Hero.jsx"));
@@ -48,7 +48,7 @@ function Portfolio() {
   return (
     <>
       <AnimatePresence>
-        {!introDone && <CommandPaletteIntro onComplete={() => setIntroDone(true)} />}
+        {!introDone && <ProfileIntro onComplete={() => setIntroDone(true)} />}
       </AnimatePresence>
       {introDone && (
         <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-950 transition-colors duration-500 dark:bg-ink dark:text-white">
