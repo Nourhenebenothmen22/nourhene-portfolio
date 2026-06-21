@@ -1,5 +1,6 @@
 import { FaEnvelope, FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import { FiArrowDown, FiDownload } from "react-icons/fi";
+import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { profileData } from "../data/profile.js";
 import { publicAsset } from "../utils/publicAsset.js";
@@ -16,18 +17,29 @@ const profileImage = "/image-portfolio/nourhene-profile.webp";
 export default function Hero() {
   const { language, t } = useLanguage();
   const profile = profileData[language];
+  const prefersReduced = useReducedMotion();
+  const anim = (delay) => prefersReduced ? {} : {
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay, ease: "easeOut" },
+  };
+  const imgAnim = (delay) => prefersReduced ? {} : {
+    initial: { opacity: 0, scale: 0.88 },
+    animate: { opacity: 1, scale: 1 },
+    transition: { duration: 0.7, delay, ease: "easeOut" },
+  };
 
   return (
     <section id="hero" className="professional-bg relative flex min-h-dvh flex-col justify-center px-4 pt-24 pb-12 md:pb-10">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
       <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="text-center lg:text-start">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-electric dark:text-cyan-300">{t.sections.aboutEyebrow}</p>
-          <p className="mb-4 text-base font-extrabold text-slate-950 dark:text-white">{profile.name}</p>
-          <h1 className="max-w-4xl text-3xl font-extrabold leading-tight text-slate-950 dark:text-white md:text-5xl">{t.hero.title}</h1>
-          <p className="mt-4 max-w-2xl text-base font-semibold text-slate-700 dark:text-slate-200 md:text-lg">{t.hero.subtitle}</p>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300 md:text-base md:line-clamp-3">{t.about.paragraph}</p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+          <motion.p {...anim(0)} className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-electric dark:text-cyan-300">{t.sections.aboutEyebrow}</motion.p>
+          <motion.p {...anim(0.08)} className="mb-4 text-base font-extrabold text-slate-950 dark:text-white">{profile.name}</motion.p>
+          <motion.h1 {...anim(0.16)} className="max-w-4xl text-3xl font-extrabold leading-tight text-slate-950 dark:text-white md:text-5xl">{t.hero.title}</motion.h1>
+          <motion.p {...anim(0.24)} className="mt-4 max-w-2xl text-base font-semibold text-slate-700 dark:text-slate-200 md:text-lg">{t.hero.subtitle}</motion.p>
+          <motion.p {...anim(0.32)} className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300 md:text-base md:line-clamp-3">{t.about.paragraph}</motion.p>
+          <motion.div {...anim(0.4)} className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
             <a href={publicAsset("/cv/Nourhene-Ben-Othmen-CV.pdf")} className="inline-flex items-center gap-2 rounded-full bg-electric px-6 py-3 font-bold text-white shadow-lg shadow-blue-600/20 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-cyan-400">
               <FiDownload /> {t.hero.cv}
             </a>
@@ -44,9 +56,9 @@ export default function Hero() {
                 <Icon />
               </a>
             ))}
-          </div>
+          </motion.div>
         </div>
-        <div className="mx-auto grid w-full max-w-[360px] place-items-center lg:mx-0 lg:justify-self-end">
+        <motion.div {...imgAnim(0.12)} className="mx-auto grid w-full max-w-[360px] place-items-center lg:mx-0 lg:justify-self-end">
           <div className="avatar-float relative h-64 w-64 rounded-full md:h-80 md:w-80">
             <div className="avatar-ring absolute -inset-3 rounded-full bg-gradient-to-br from-blue-500 via-cyan-400 to-violet-500 opacity-80 blur-[1px]" />
             <div className="absolute -inset-6 rounded-full bg-cyan-400/10 blur-2xl dark:bg-cyan-300/10" />
@@ -54,7 +66,7 @@ export default function Hero() {
               <img src={publicAsset(profileImage)} alt={profile.imageAlt} className="h-full w-full rounded-full object-cover object-center" />
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
