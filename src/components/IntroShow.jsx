@@ -30,8 +30,15 @@ export default function ProfileIntro({ onComplete }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.overflow = "hidden";
-    return () => { document.documentElement.style.overflow = ""; };
+    const restore = [];
+    const lock = (el) => {
+      const prev = el.style.overflow;
+      el.style.overflow = "hidden";
+      restore.push(() => { el.style.overflow = prev; });
+    };
+    lock(document.documentElement);
+    lock(document.body);
+    return () => restore.forEach((fn) => fn());
   }, []);
 
   useEffect(() => {
