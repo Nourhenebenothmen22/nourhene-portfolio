@@ -40,7 +40,7 @@ export default function Hero() {
   const shouldAnimate = !prefersReduced;
 
   return (
-    <section id="hero" className="professional-bg relative flex min-h-dvh flex-col justify-center px-4 pt-24 pb-12 md:pb-10">
+    <section id="hero" className="professional-bg relative flex min-h-dvh flex-col justify-center px-4 pt-6 pb-12 md:pb-10">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
       <motion.div
         variants={shouldAnimate ? containerVariants : {}}
