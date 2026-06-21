@@ -4,7 +4,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
 
 const heroProfileImage = "/image-portfolio/nourhene-profile.webp";
-const DURATION = 3000;
+const DURATION = 2000;
 
 export default function ProfileIntro({ onComplete }) {
   const { t } = useLanguage();
