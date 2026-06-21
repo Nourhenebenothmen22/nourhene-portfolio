@@ -1,10 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import { AnimatePresence } from "framer-motion";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext.jsx";
 import { useTheme } from "./context/ThemeContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { profileData } from "./data/profile.js";
-import IntroShow from "./components/IntroShow.jsx";
+import LoadingShow from "./components/IntroShow.jsx";
 import Navbar from "./components/Navbar.jsx";
 
 const Hero = lazy(() => import("./components/Hero.jsx"));
@@ -39,9 +40,15 @@ function Portfolio() {
     document.querySelector('meta[name="description"]')?.setAttribute("content", profile.metaDescription);
   }, [language, dir, profile]);
 
+  useEffect(() => {
+    import("./components/Hero.jsx");
+  }, []);
+
   return (
     <>
-      {!introDone && <IntroShow onComplete={() => setIntroDone(true)} />}
+      <AnimatePresence>
+        {!introDone && <LoadingShow onComplete={() => setIntroDone(true)} />}
+      </AnimatePresence>
       {introDone && (
         <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-950 transition-colors duration-500 dark:bg-ink dark:text-white">
           <Navbar />
