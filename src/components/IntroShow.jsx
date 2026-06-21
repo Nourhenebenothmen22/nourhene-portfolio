@@ -45,7 +45,7 @@ export default function ProfileIntro({ onComplete }) {
         calledRef.current = true;
         onCompleteRef.current();
       }
-    }, MAX_DURATION);
+    }, DURATION + 2000);
 
     return () => {
       clearTimeout(timerRef.current);
