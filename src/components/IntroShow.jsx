@@ -5,7 +5,7 @@ import { publicAsset } from "../utils/publicAsset.js";
 
 const heroProfileImage = "/image-portfolio/nourhene-profile.webp";
 const INTRO_DURATION = 8000;
-const SHORT_DURATION = 800;
+const SHORT_DURATION = 4000;
 const MAX_DURATION = 4000;
 
 export default function ProfileIntro({ onComplete }) {
