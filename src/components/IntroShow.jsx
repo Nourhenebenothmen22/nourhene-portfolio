@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
