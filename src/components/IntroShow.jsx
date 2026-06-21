@@ -66,7 +66,7 @@ export default function CommandPaletteIntro({ onComplete }) {
         clearInterval(t);
         setTimeout(() => setShowCommands(true), 250);
       }
-    }, 30);
+    }, 25);
 
     return () => clearInterval(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -145,13 +145,23 @@ export default function CommandPaletteIntro({ onComplete }) {
           animate={shouldAnimate ? { opacity: 1, y: 0, transition: { duration: 0.35, delay: 0.1 } } : {}}
           className="overflow-hidden rounded-xl border border-white/[0.06] bg-[#0c0f24]/90 shadow-2xl shadow-black/30 backdrop-blur-sm"
         >
-          <div className="flex items-center gap-1.5 border-b border-white/[0.04] px-4 py-2.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
-            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/60" />
-            <span className="h-2.5 w-2.5 rounded-full bg-green-500/60" />
-            <span className="ml-2 text-[10px] font-medium tracking-[0.08em] text-white/25 uppercase">
-              command palette
-            </span>
+          <div className="flex items-center justify-between border-b border-white/[0.04] px-4 py-2">
+            <div className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
+              <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/60" />
+              <span className="h-2.5 w-2.5 rounded-full bg-green-500/60" />
+              <span className="ml-2 text-[10px] font-medium tracking-[0.08em] text-white/25 uppercase">
+                command palette
+              </span>
+            </div>
+            <motion.img
+              src={publicAsset(heroProfileImage)}
+              alt=""
+              aria-hidden="true"
+              initial={shouldAnimate ? { opacity: 0, scale: 0.8 } : {}}
+              animate={shouldAnimate ? { opacity: 1, scale: 1, transition: { duration: 0.35, delay: 0.25 } } : {}}
+              className="h-6 w-6 rounded-full border border-white/[0.12] object-cover"
+            />
           </div>
 
           <div className="px-4 pb-3 pt-4 md:px-5 md:pb-4 md:pt-5">
