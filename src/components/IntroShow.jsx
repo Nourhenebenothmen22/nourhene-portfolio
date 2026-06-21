@@ -4,31 +4,30 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
 
 const heroProfileImage = "/image-portfolio/nourhene-profile.webp";
-const LOADER_DURATION = 5800;
-const MAX_DURATION = 7800;
+const FULL_DURATION = 6000;
+const SHORT_DURATION = 1500;
+const MAX_DURATION = 8000;
 
-const STEPS = [
-  { threshold: 0, label: "Initializing workspace", status: "Mounting virtual environment..." },
-  { threshold: 15, label: "Loading digital identity", status: "Verifying credentials..." },
-  { threshold: 30, label: "Mapping technical skills", status: "Indexing skill trees..." },
-  { threshold: 45, label: "Indexing projects", status: "Compiling project modules..." },
-  { threshold: 60, label: "Syncing experience", status: "Optimizing experience timeline..." },
-  { threshold: 75, label: "Optimizing interface", status: "Calibrating UI components..." },
-  { threshold: 90, label: "Preparing hero section", status: "Warming up animations..." },
-  { threshold: 100, label: "Portfolio ready", status: "Launching interface..." },
+const INTRO_MODULES = [
+  { id: "identity", label: "Identity Module", initials: "ID", status: "Loaded" },
+  { id: "skills", label: "Skills Matrix", initials: "SK", status: "Mapped" },
+  { id: "projects", label: "Projects Engine", initials: "PR", status: "Indexed" },
+  { id: "experience", label: "Experience Timeline", initials: "EX", status: "Synced" },
+  { id: "interface", label: "Interface Optimization", initials: "UI", status: "Optimized" },
+  { id: "hero", label: "Hero Launch", initials: "HR", status: "Ready" },
 ];
 
-function Particles({ count = 20 }) {
+function Particles({ count = 18 }) {
   const items = useMemo(
     () =>
       Array.from({ length: count }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 2.5 + 0.5,
+        size: Math.random() * 2 + 0.5,
         duration: Math.random() * 5 + 4,
         delay: Math.random() * 4,
-        floatY: -(Math.random() * 18 + 6),
+        floatY: -(Math.random() * 16 + 4),
       })),
     [count],
   );
@@ -36,9 +35,9 @@ function Particles({ count = 20 }) {
   return items.map((p) => (
     <motion.div
       key={p.id}
-      className="absolute rounded-full bg-cyan-400/20"
+      className="absolute rounded-full bg-cyan-400/15"
       style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
-      animate={{ y: [0, p.floatY, 0], opacity: [0.1, 0.5, 0.1] }}
+      animate={{ y: [0, p.floatY, 0], opacity: [0.1, 0.4, 0.1] }}
       transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
     />
   ));
@@ -53,15 +52,20 @@ export default function LoadingShow({ onComplete }) {
   const calledRef = useRef(false);
   const completeTimerRef = useRef(null);
   const safetyTimerRef = useRef(null);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  });
 
   const shouldAnimate = !prefersReduced;
 
-  let activeIndex = 0;
-  for (let i = 0; i < STEPS.length; i++) {
-    if (progress >= STEPS[i].threshold) activeIndex = i;
-  }
+  const [isReturning] = useState(() => !!localStorage.getItem("op_intro_seen"));
+  const DURATION = isReturning ? SHORT_DURATION : FULL_DURATION;
 
-  const currentStep = STEPS[activeIndex];
+  useEffect(() => {
+    localStorage.setItem("op_intro_seen", "1");
+  }, []);
 
   useEffect(() => {
     const img = new Image();
@@ -75,7 +79,7 @@ export default function LoadingShow({ onComplete }) {
     const animate = (timestamp) => {
       if (!startRef.current) startRef.current = timestamp;
       const elapsed = timestamp - startRef.current;
-      const raw = Math.min(elapsed / LOADER_DURATION, 1);
+      const raw = Math.min(elapsed / DURATION, 1);
       const eased = 1 - Math.pow(1 - raw, 1.5);
       const pct = Math.min(Math.round(eased * 100), 100);
 
@@ -83,7 +87,7 @@ export default function LoadingShow({ onComplete }) {
 
       if (pct >= 100 && !calledRef.current) {
         calledRef.current = true;
-        completeTimerRef.current = setTimeout(onComplete, 400);
+        completeTimerRef.current = setTimeout(() => onCompleteRef.current(), 400);
       } else if (pct < 100) {
         rafRef.current = requestAnimationFrame(animate);
       }
@@ -93,7 +97,7 @@ export default function LoadingShow({ onComplete }) {
       if (!calledRef.current) {
         calledRef.current = true;
         setProgress(100);
-        setTimeout(onComplete, 200);
+        setTimeout(() => onCompleteRef.current(), 200);
       }
     }, MAX_DURATION);
 
@@ -104,162 +108,219 @@ export default function LoadingShow({ onComplete }) {
       clearTimeout(safetyTimerRef.current);
       clearTimeout(completeTimerRef.current);
     };
-  }, [onComplete]);
+  }, [DURATION]);
 
   useEffect(() => {
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
+  const totalModules = INTRO_MODULES.length;
+
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-ink text-white"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink text-white"
       initial={shouldAnimate ? { opacity: 0 } : { opacity: 1 }}
-      animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }}
-      exit={shouldAnimate ? { opacity: 0, scale: 1.03, filter: "blur(3px)", transition: { duration: 0.4, ease: "easeInOut" } } : { opacity: 0, transition: { duration: 0.1 } }}
+      animate={{ opacity: 1, transition: { duration: 0.4, ease: "easeOut" } }}
+      exit={shouldAnimate ? { opacity: 0, scale: 1.02, filter: "blur(4px)", transition: { duration: 0.45, ease: "easeInOut" } } : { opacity: 0, transition: { duration: 0.1 } }}
       role="progressbar"
       aria-label={t.loadingLabel}
       aria-valuenow={progress}
       aria-valuemin={0}
       aria-valuemax={100}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-ink via-[#0a0f2e] to-ink" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(37,99,235,0.12),transparent_40%),radial-gradient(circle_at_70%_60%,rgba(124,58,237,0.1),transparent_35%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink via-[#090e2a] to-ink" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_35%,rgba(37,99,235,0.10),transparent_40%),radial-gradient(circle_at_75%_65%,rgba(124,58,237,0.08),transparent_35%)]" />
 
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.025]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+            "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
+          backgroundSize: "50px 50px",
         }}
       />
 
       {shouldAnimate && (
         <motion.div
-          className="absolute rounded-full border border-cyan-400/8"
-          style={{ width: "min(500px, 80vw)", height: "min(500px, 80vw)" }}
+          className="absolute rounded-full border border-cyan-400/6"
+          style={{ width: "min(420px, 70vw)", height: "min(420px, 70vw)" }}
           animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         />
       )}
 
       {shouldAnimate && <Particles />}
 
-      <motion.div
-        className="relative z-10 mx-4 w-full max-w-md"
-        initial={shouldAnimate ? { opacity: 0, y: 20 } : {}}
-        animate={shouldAnimate ? { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut", delay: 0.15 } } : {}}
-      >
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] shadow-2xl shadow-black/40 backdrop-blur-xl">
+      <div className="relative z-10 flex w-full max-w-lg flex-col items-center px-4">
+        <motion.div
+          initial={shouldAnimate ? { opacity: 0, y: -10 } : {}}
+          animate={shouldAnimate ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.15 } } : {}}
+          className="mb-1 flex items-center gap-2 text-[10px] font-bold tracking-[0.28em] text-cyan-300/60 uppercase"
+        >
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]" />
+          AI Portfolio System
+        </motion.div>
+
+        <motion.h2
+          initial={shouldAnimate ? { opacity: 0 } : {}}
+          animate={shouldAnimate ? { opacity: 1, transition: { duration: 0.5, delay: 0.25 } } : {}}
+          className="mb-6 text-center text-base font-light tracking-[0.12em] text-white/40 uppercase md:text-lg"
+        >
+          Assembling Digital Experience
+        </motion.h2>
+
+        <div className="relative w-full">
           {shouldAnimate && (
-            <motion.div
-              className="pointer-events-none absolute left-0 right-0 z-20 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"
-              animate={{ top: ["-2%", "102%"] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "linear", delay: 0.5 }}
-            />
+            <div className="pointer-events-none absolute -inset-4 z-10 overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)" }}>
+              <motion.div
+                className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"
+                animate={{ top: ["-5%", "105%"] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0.8 }}
+              />
+            </div>
           )}
 
-          <div className="pointer-events-none absolute -inset-20 rounded-full bg-cyan-500/5 blur-3xl" />
+          <div className="relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 shadow-2xl shadow-black/30 backdrop-blur-sm md:p-7">
+            <div className="pointer-events-none absolute -inset-10 rounded-full bg-cyan-500/[0.04] blur-3xl" />
 
-          <div className="relative z-10 flex flex-col items-center px-8 py-10 md:px-10 md:py-12">
-            <motion.div
-              initial={shouldAnimate ? { opacity: 0, y: -8 } : {}}
-              animate={shouldAnimate ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.25 } } : {}}
-              className="mb-2 flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] text-cyan-300/70 uppercase"
-            >
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-cyan-400" />
-              AI / Data Science Portfolio
-            </motion.div>
+            <div className="relative z-10">
+              <motion.div
+                className="grid grid-cols-2 gap-2.5 md:gap-3"
+                initial={shouldAnimate ? { opacity: 0 } : {}}
+                animate={shouldAnimate ? { opacity: 1, transition: { duration: 0.4, delay: 0.35 } } : {}}
+              >
+                {INTRO_MODULES.map((module, i) => {
+                  const threshold = i / totalModules;
+                  const nextThreshold = (i + 1) / totalModules;
+                  const ratio = progress / 100;
+                  const isCompleted = ratio >= nextThreshold;
+                  const isActive = !isCompleted && ratio >= threshold;
 
-            <motion.h2
-              initial={shouldAnimate ? { opacity: 0 } : {}}
-              animate={shouldAnimate ? { opacity: 1, transition: { duration: 0.5, delay: 0.35 } } : {}}
-              className="mb-8 text-center text-sm font-medium tracking-[0.15em] text-white/50 uppercase"
-            >
-              Building your experience...
-            </motion.h2>
-
-            <motion.div className="mb-4 text-center">
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-violet-400 bg-clip-text text-7xl font-extralight tabular-nums tracking-tight text-transparent md:text-8xl">
-                {progress}
-              </span>
-              <span className="text-3xl text-white/30 md:text-4xl">%</span>
-            </motion.div>
-
-            <div className="relative mb-8 h-1 w-full overflow-hidden rounded-full bg-white/10">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-blue-500 via-cyan-400 to-violet-500"
-                style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
-              />
-              <div
-                className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.6)]"
-                style={{ left: `calc(${progress}% - 6px)` }}
-              />
-            </div>
-
-            <div className="mb-6 w-full space-y-0.5">
-              {STEPS.map((step, i) => {
-                const isActive = i === activeIndex;
-                const isCompleted = i < activeIndex;
-
-                return (
-                  <motion.div
-                    key={step.threshold}
-                    className="flex items-center gap-3 py-1"
-                    initial={shouldAnimate ? false : {}}
-                    animate={shouldAnimate ? { opacity: isActive ? 1 : isCompleted ? 0.6 : 0.3 } : {}}
-                    transition={{ duration: 0.3 }}
-                  >
+                  return (
                     <motion.div
-                      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold transition-colors duration-300 ${
+                      key={module.id}
+                      initial={shouldAnimate ? { opacity: 0, y: 14, scale: 0.94 } : {}}
+                      animate={shouldAnimate
+                        ? {
+                            opacity: isCompleted || isActive ? 1 : 0.35,
+                            y: 0,
+                            scale: 1,
+                            transition: {
+                              opacity: { duration: 0.3 },
+                              y: { duration: 0.4, delay: 0.4 + i * 0.09 },
+                              scale: { duration: 0.4, delay: 0.4 + i * 0.09 },
+                            },
+                          }
+                        : { opacity: 1, y: 0, scale: 1 }}
+                      className={`relative rounded-xl border p-3 transition-all duration-500 md:p-4 ${
                         isCompleted
-                          ? "border-cyan-400 bg-cyan-400/20 text-cyan-300"
+                          ? "border-cyan-400/25 bg-cyan-400/[0.04]"
                           : isActive
-                            ? "border-cyan-400 bg-cyan-400/10 text-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-                            : "border-white/15 text-white/20"
+                            ? "border-cyan-400/40 bg-cyan-400/[0.06] shadow-[0_0_24px_rgba(34,211,238,0.06)]"
+                            : "border-white/[0.05] bg-white/[0.01]"
                       }`}
-                      animate={shouldAnimate && isActive ? { scale: [1, 1.2, 1] } : {}}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
                     >
-                      {isCompleted ? "✓" : isActive ? "●" : "○"}
+                      {isActive && shouldAnimate && (
+                        <motion.div
+                          className="pointer-events-none absolute inset-0 rounded-xl"
+                          animate={{ boxShadow: ["0 0 0px rgba(34,211,238,0)", "0 0 18px rgba(34,211,238,0.06)", "0 0 0px rgba(34,211,238,0)"] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                      )}
+
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg text-xs font-bold transition-all duration-500 md:h-9 md:w-9 md:text-sm ${
+                            isCompleted
+                              ? "bg-cyan-400/20 text-cyan-300"
+                              : isActive
+                                ? "bg-cyan-400/15 text-cyan-300"
+                                : "bg-white/[0.04] text-white/25"
+                          }`}
+                        >
+                          {isCompleted ? (
+                            <motion.span
+                              initial={shouldAnimate ? { scale: 0 } : {}}
+                              animate={shouldAnimate ? { scale: 1, transition: { type: "spring", stiffness: 300, damping: 15 } } : {}}
+                            >
+                              ✓
+                            </motion.span>
+                          ) : (
+                            module.initials
+                          )}
+                        </div>
+
+                        <div className="flex flex-col gap-0.5">
+                          <span
+                            className={`text-xs font-medium leading-tight transition-colors duration-500 md:text-sm ${
+                              isCompleted
+                                ? "text-white/80"
+                                : isActive
+                                  ? "text-white"
+                                  : "text-white/30"
+                            }`}
+                          >
+                            {module.label}
+                          </span>
+                          <span
+                            className={`text-[10px] font-medium uppercase tracking-wider transition-all duration-500 md:text-[11px] ${
+                              isCompleted
+                                ? "text-cyan-300/60"
+                                : isActive
+                                  ? "text-cyan-300/80"
+                                  : "text-white/15"
+                            }`}
+                          >
+                            {isActive ? (
+                              <motion.span
+                                animate={shouldAnimate ? { opacity: [0.5, 1, 0.5] } : {}}
+                                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                              >
+                                ● Processing
+                              </motion.span>
+                            ) : isCompleted ? (
+                              `${module.status} ✓`
+                            ) : (
+                              "Pending"
+                            )}
+                          </span>
+                        </div>
+                      </div>
                     </motion.div>
+                  );
+                })}
+              </motion.div>
 
-                    <span
-                      className={`text-sm leading-5 transition-colors duration-300 ${
-                        isActive
-                          ? "font-medium text-white"
-                          : isCompleted
-                            ? "text-white/50"
-                            : "text-white/20"
-                      }`}
-                    >
-                      {step.label}
-                    </span>
-                  </motion.div>
-                );
-              })}
+              <motion.div
+                initial={shouldAnimate ? { opacity: 0 } : {}}
+                animate={shouldAnimate ? { opacity: 1, transition: { duration: 0.5, delay: 0.9 } } : {}}
+                className="relative mt-5 h-[2px] overflow-hidden rounded-full bg-white/[0.06] md:mt-6"
+              >
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-blue-500 via-cyan-400 to-violet-500"
+                  style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
+                />
+                <div
+                  className="absolute top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]"
+                  style={{ left: `calc(${progress}% - 4px)` }}
+                />
+                <span className="absolute right-0 top-1/2 -translate-y-1/2 text-[9px] font-medium tracking-wider text-white/25">
+                  {progress}%
+                </span>
+              </motion.div>
             </div>
-
-            <motion.div
-              key={currentStep.status}
-              initial={shouldAnimate ? { opacity: 0, y: 6 } : {}}
-              animate={shouldAnimate ? { opacity: 0.5, y: 0, transition: { duration: 0.3 } } : { opacity: 0.5 }}
-              className="text-center text-[11px] tracking-[0.15em] text-white/50 uppercase"
-            >
-              {currentStep.status}
-            </motion.div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <motion.div
-        initial={shouldAnimate ? { opacity: 0 } : { opacity: 0.2 }}
-        animate={shouldAnimate ? { opacity: 0.2, transition: { delay: 1.5, duration: 0.8 } } : { opacity: 0.2 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.2em] text-white/20 uppercase"
+        initial={shouldAnimate ? { opacity: 0 } : { opacity: 0.15 }}
+        animate={shouldAnimate ? { opacity: 0.15, transition: { delay: 1.5, duration: 0.8 } } : { opacity: 0.15 }}
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.25em] text-white/15 uppercase"
       >
-        <span className="inline-block h-px w-6 bg-white/20 align-middle" />
-        <span className="mx-3">AI / Data Science</span>
-        <span className="inline-block h-px w-6 bg-white/20 align-middle" />
+        <span className="inline-block h-px w-5 bg-white/15 align-middle" />
+        <span className="mx-3">AI / Data Science Engine</span>
+        <span className="inline-block h-px w-5 bg-white/15 align-middle" />
       </motion.div>
     </motion.div>
   );
