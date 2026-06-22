@@ -22,7 +22,7 @@ export default function Navbar() {
       transition={{ duration: 0.4, ease: "easeOut" }}
       className="fixed inset-x-0 top-0 z-50 px-3 pt-3"
     >
-      <nav className="glass mx-auto flex max-w-7xl items-center justify-between rounded-2xl px-4 py-3 text-sm">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-slate-200 bg-white/95 px-4 py-3 text-sm shadow-sm dark:border-white/10 dark:bg-navy/95 dark:shadow-black/20">
         <a href="#hero" className="flex items-center gap-3 focus:outline-cyan-400" aria-label={profile.name}>
           <img src={publicAsset(logoImage)} alt={profile.logoAlt} className="h-11 w-11 rounded-full border border-white/30 object-cover shadow-sm" />
         </a>
