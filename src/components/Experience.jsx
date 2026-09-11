@@ -3,6 +3,17 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { experienceData } from "../data/experience.js";
 import useInView from "../hooks/useInView.js";
 
+function getOrgInitials(name) {
+  if (!name) return "EXP";
+  if (name.includes("Neoxion")) return "NX";
+  if (name.includes("iTeam")) return "iT";
+  if (name.includes("OACA")) return "OA";
+  if (name.includes("MBC")) return "MBC";
+  if (name.includes("OMMP")) return "OM";
+  if (name.includes("Telecom")) return "TT";
+  return name.slice(0, 2).toUpperCase();
+}
+
 export default function Experience() {
   const { language, dir } = useLanguage();
   const copy = experienceData[language];
@@ -14,6 +25,7 @@ export default function Experience() {
         <SectionHeaderCopy title={copy.title} subtitle={copy.subtitle} />
 
         <div className="relative mx-auto max-w-6xl">
+          {/* Vertical central gradient timeline line */}
           <div className="absolute bottom-0 top-0 w-px overflow-hidden rounded-full bg-slate-200 dark:bg-white/10 ltr:left-4 rtl:right-4 md:left-1/2 md:-translate-x-1/2 rtl:md:left-1/2 rtl:md:right-auto">
             <div
               ref={barRef}
@@ -25,7 +37,7 @@ export default function Experience() {
             />
           </div>
 
-          <div className="space-y-8 md:space-y-10">
+          <div className="space-y-8 md:space-y-12">
             {copy.items.map((item, index) => {
               const isEven = index % 2 === 0;
               const sideClass = isEven
@@ -33,7 +45,13 @@ export default function Experience() {
                 : "md:col-start-2 md:pl-12 rtl:md:pl-0 rtl:md:pr-12";
 
               return (
-                <ExperienceCard key={`${item.organization}-${item.date}`} item={item} index={index} sideClass={sideClass} copy={copy} />
+                <ExperienceCard
+                  key={`${item.organization}-${item.date}`}
+                  item={item}
+                  index={index}
+                  sideClass={sideClass}
+                  copy={copy}
+                />
               );
             })}
           </div>
@@ -46,85 +64,126 @@ export default function Experience() {
 function SectionHeaderCopy({ title, subtitle }) {
   const [ref, inView] = useInView({ threshold: 0.4 });
   return (
-    <div ref={ref} className={`animate-in mb-12 ${inView ? "visible" : ""}`}>
-      <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-600 dark:text-cyan-300">{title}</p>
-      <h2 className="max-w-3xl text-3xl font-bold leading-tight text-slate-950 dark:text-white md:text-5xl">{subtitle}</h2>
+    <div ref={ref} className={`animate-in mb-12 md:mb-16 ${inView ? "visible" : ""}`}>
+      <p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-cyan-600 dark:text-cyan-400">
+        {title}
+      </p>
+      <h2 className="max-w-3xl text-3xl font-black leading-tight text-slate-950 dark:text-white md:text-5xl">
+        {subtitle}
+      </h2>
     </div>
   );
 }
 
 function ExperienceCard({ item, index, sideClass, copy }) {
-  const [ref, inView] = useInView({ threshold: 0.24 });
+  const [ref, inView] = useInView({ threshold: 0.2 });
   const [dotRef, dotInView] = useInView({ threshold: 0.4 });
+  const initials = getOrgInitials(item.organization);
 
   return (
     <article
       ref={ref}
-      className={`animate-in-up relative grid gap-4 ps-12 md:grid-cols-2 md:ps-0 ${inView ? "visible" : ""}`}
-      style={{ transitionDelay: `${index * 0.1}s` }}
+      className={`animate-in-up relative grid gap-4 ps-12 md:grid-cols-2 md:ps-0 ${
+        inView ? "visible" : ""
+      }`}
+      style={{ transitionDelay: `${index * 0.08}s` }}
     >
+      {/* Timeline center bullet icon */}
       <div
         ref={dotRef}
-        className={`absolute top-6 z-10 grid h-9 w-9 place-items-center rounded-full border border-blue-200 bg-white text-electric shadow-lg shadow-blue-900/10 ring-8 ring-white dark:border-cyan-300/20 dark:bg-slate-950 dark:text-cyan-200 dark:ring-ink ltr:left-0 rtl:right-0 md:left-1/2 md:-translate-x-1/2 rtl:md:left-1/2 rtl:md:right-auto ${dotInView ? "scale-100 opacity-100" : "scale-[0.65] opacity-0"}`}
-        style={{ transition: "transform 0.4s ease-out, opacity 0.4s ease-out", transitionDelay: `${index * 0.1 + 0.12}s` }}
+        className={`absolute top-6 z-10 grid h-10 w-10 place-items-center rounded-full border border-blue-200 bg-white text-electric shadow-lg shadow-blue-900/10 ring-8 ring-white dark:border-cyan-300/20 dark:bg-slate-950 dark:text-cyan-200 dark:ring-ink ltr:left-0 rtl:right-0 md:left-1/2 md:-translate-x-1/2 rtl:md:left-1/2 rtl:md:right-auto ${
+          dotInView ? "scale-100 opacity-100" : "scale-[0.65] opacity-0"
+        }`}
+        style={{
+          transition: "transform 0.4s ease-out, opacity 0.4s ease-out",
+          transitionDelay: `${index * 0.08 + 0.1}s`,
+        }}
       >
-        <FiBriefcase aria-hidden="true" />
+        <FiBriefcase aria-hidden="true" className="text-sm" />
       </div>
 
       <div className={`group ${sideClass}`}>
-        <div className="glass glow-border relative overflow-hidden rounded-2xl p-6 transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-blue-500/15 dark:hover:shadow-cyan-500/10">
+        <div className="glass glow-border relative overflow-hidden rounded-3xl p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-cyan-500/10">
+          {/* Accent top gradient bar */}
           <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-violet-600" />
 
-          <div className="mb-5 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1 text-xs font-bold text-white shadow-md shadow-blue-500/20">
-              <FiCalendar aria-hidden="true" />
-              {copy.labels.date}: {item.date}
+          {/* Header row: Date & Location pills */}
+          <div className="mb-4 flex flex-wrap items-center gap-2.5">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1 text-xs font-bold text-white shadow-md shadow-blue-500/20">
+              <FiCalendar aria-hidden="true" className="text-xs" />
+              {item.date}
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 dark:border-cyan-300/15 dark:bg-cyan-300/10 dark:text-cyan-100">
-              <FiMapPin aria-hidden="true" />
-              {copy.labels.location}: {item.location}
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-100 bg-blue-50/80 px-3 py-1 text-xs font-semibold text-blue-700 dark:border-cyan-300/15 dark:bg-cyan-300/10 dark:text-cyan-100">
+              <FiMapPin aria-hidden="true" className="text-xs" />
+              {item.location}
             </span>
           </div>
 
-          <h3 className="text-xl font-extrabold leading-snug text-slate-950 dark:text-white">{item.organization}</h3>
-          <p className="mt-2 text-sm font-bold text-electric dark:text-cyan-200">
-            {copy.labels.position}: {item.position}
-          </p>
+          {/* Organization & Position header with logo badge */}
+          <div className="flex items-start gap-3.5">
+            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 font-black text-xs text-white shadow-md shadow-blue-500/20">
+              {initials}
+            </div>
+            <div>
+              <h3 className="text-xl font-black leading-snug text-slate-950 dark:text-white">
+                {item.organization}
+              </h3>
+              <p className="mt-0.5 text-sm font-bold text-electric dark:text-cyan-300">
+                {item.position}
+              </p>
+            </div>
+          </div>
 
+          {/* Highlighted Project Callout */}
           {item.project && (
-            <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-cyan-700 dark:text-cyan-300">
-              <span className="opacity-80">{copy.labels.project || "Projet"} :</span> {item.project}
-            </p>
+            <div className="mt-3.5 rounded-xl border border-cyan-500/20 bg-cyan-500/10 px-3 py-2 text-xs font-semibold text-cyan-900 dark:border-cyan-400/20 dark:bg-cyan-950/40 dark:text-cyan-200">
+              <span className="font-bold text-cyan-600 dark:text-cyan-400">
+                {copy.labels.project || "Projet"} :
+              </span>{" "}
+              {item.project}
+            </div>
           )}
 
-          <div className="mt-6">
-            <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-300">{copy.labels.missions}</h4>
-            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
+          {/* Missions List */}
+          <div className="mt-5">
+            <h4 className="text-xs font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+              {copy.labels.missions}
+            </h4>
+            <ul className="mt-3 space-y-2 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-200">
               {item.missions.map((mission) => (
-                <li key={mission} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500" />
+                <li key={mission} className="flex gap-2.5">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500" />
                   <span>{mission}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="mt-6">
-            <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-300">{copy.labels.technologies}</h4>
-            <div className="mt-3 flex flex-wrap gap-2">
+          {/* Technologies */}
+          <div className="mt-5">
+            <h4 className="text-xs font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+              {copy.labels.technologies}
+            </h4>
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
               {item.technologies.map((technology, tagIndex) => (
-                <TechnologyTag key={technology} technology={technology} index={index} tagIndex={tagIndex} />
+                <TechnologyTag
+                  key={technology}
+                  technology={technology}
+                  index={index}
+                  tagIndex={tagIndex}
+                />
               ))}
             </div>
           </div>
 
+          {/* Certificate Action Button */}
           {item.certificate && (
             <div className="mt-6 border-t border-slate-100 pt-4 dark:border-white/10">
               <a
                 href={item.certificate.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/cert inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-blue-50/70 px-3.5 py-2 text-xs font-semibold text-blue-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-100 dark:border-cyan-400/20 dark:bg-cyan-950/40 dark:text-cyan-200 dark:hover:border-cyan-400/40 dark:hover:bg-cyan-900/40"
+                className="group/cert inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-blue-50/70 px-4 py-2 text-xs font-bold text-blue-700 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-100 dark:border-cyan-400/20 dark:bg-cyan-950/40 dark:text-cyan-200 dark:hover:border-cyan-400/40 dark:hover:bg-cyan-900/40"
               >
                 <FiAward className="shrink-0 text-base text-amber-500 dark:text-amber-400" />
                 <span>{item.certificate.title}</span>
@@ -143,8 +202,13 @@ function TechnologyTag({ technology, index, tagIndex }) {
   return (
     <span
       ref={ref}
-      className={`rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 shadow-sm transition group-hover:border-violet-200 group-hover:bg-violet-50 dark:border-cyan-300/15 dark:bg-cyan-300/10 dark:text-cyan-100 dark:group-hover:border-violet-300/20 dark:group-hover:bg-violet-400/10 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
-      style={{ transition: "opacity 0.3s ease-out, transform 0.3s ease-out", transitionDelay: `${index * 0.06 + tagIndex * 0.035}s` }}
+      className={`rounded-full border border-blue-200/80 bg-blue-50/70 px-2.5 py-0.5 text-xs font-semibold text-blue-700 shadow-sm transition hover:border-cyan-400 dark:border-cyan-300/15 dark:bg-cyan-300/10 dark:text-cyan-100 ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+      }`}
+      style={{
+        transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
+        transitionDelay: `${index * 0.04 + tagIndex * 0.02}s`,
+      }}
     >
       {technology}
     </span>

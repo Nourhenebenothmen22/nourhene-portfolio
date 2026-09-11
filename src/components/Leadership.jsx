@@ -15,7 +15,9 @@ function LeadershipCard({ item, index }) {
   return (
     <article
       ref={ref}
-      className={`animate-in glass glow-border group flex h-full flex-col overflow-hidden rounded-3xl p-3 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25 ${inView ? "visible" : ""}`}
+      className={`animate-in glass glow-border group flex h-full flex-col overflow-hidden rounded-3xl p-3 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 dark:hover:shadow-black/25 ${
+        inView ? "visible" : ""
+      }`}
       style={{ transitionDelay: `${index * 0.08}s` }}
     >
       <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-slate-200/70 bg-gradient-to-br from-white via-blue-50 to-violet-50 shadow-inner shadow-slate-900/5 dark:border-white/10 dark:from-slate-950 dark:via-navy dark:to-violet-950 dark:shadow-black/20">
@@ -39,21 +41,25 @@ function LeadershipCard({ item, index }) {
         <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/45 dark:ring-white/10" />
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 dark:bg-cyan-300/10 dark:text-cyan-200">
+        <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-3 py-1 text-xs font-bold text-blue-700 dark:border-cyan-300/15 dark:bg-cyan-300/10 dark:text-cyan-200">
           <FaAward /> {copy.role}
         </span>
-        <h3 className="mt-4 text-xl font-extrabold leading-tight text-slate-950 dark:text-white">{copy.title}</h3>
-        <p className="mt-4 leading-7 text-slate-700 dark:text-slate-200">{copy.description}</p>
+        <h3 className="mt-4 text-xl font-black leading-tight text-slate-950 dark:text-white">
+          {copy.title}
+        </h3>
+        <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-300 text-sm">
+          {copy.description}
+        </p>
       </div>
     </article>
   );
 }
 
 export default function Leadership() {
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();
 
   return (
-    <section id="leadership" className="bg-white dark:bg-ink">
+    <section id="leadership" dir={dir} className="bg-white dark:bg-ink">
       <div className="section-shell">
         <SectionHeader eyebrow={t.sections.leadershipEyebrow} title={t.sections.leadershipTitle} />
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

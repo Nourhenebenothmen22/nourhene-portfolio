@@ -7,11 +7,12 @@ import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { profileData } from "./data/profile.js";
 import ProfileIntro from "./components/IntroShow.jsx";
 import Navbar from "./components/Navbar.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 const Hero = lazy(() => import("./components/Hero.jsx"));
-const Skills = lazy(() => import("./components/Skills.jsx"));
-const Projects = lazy(() => import("./components/Projects.jsx"));
 const Experience = lazy(() => import("./components/Experience.jsx"));
+const Projects = lazy(() => import("./components/Projects.jsx"));
+const Skills = lazy(() => import("./components/Skills.jsx"));
 const Education = lazy(() => import("./components/Education.jsx"));
 const Languages = lazy(() => import("./components/Languages.jsx"));
 const Leadership = lazy(() => import("./components/Leadership.jsx"));
@@ -34,9 +35,9 @@ function Portfolio() {
 
   useEffect(() => {
     import("./components/Hero.jsx");
-    import("./components/Skills.jsx");
-    import("./components/Projects.jsx");
     import("./components/Experience.jsx");
+    import("./components/Projects.jsx");
+    import("./components/Skills.jsx");
     import("./components/Education.jsx");
     import("./components/Languages.jsx");
     import("./components/Leadership.jsx");
@@ -56,9 +57,9 @@ function Portfolio() {
           <main>
             <Suspense fallback={null}>
               <Hero />
-              <Skills />
-              <Projects />
               <Experience />
+              <Projects />
+              <Skills />
               <Education />
               <Languages />
               <Leadership />
@@ -66,6 +67,7 @@ function Portfolio() {
             </Suspense>
           </main>
           <Footer />
+          <ScrollToTop />
           <ToastContainer
             position={language === "ar" ? "top-left" : "top-right"}
             autoClose={2500}
