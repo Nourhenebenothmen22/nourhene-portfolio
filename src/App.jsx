@@ -13,6 +13,7 @@ const Hero = lazy(() => import("./components/Hero.jsx"));
 const Experience = lazy(() => import("./components/Experience.jsx"));
 const Projects = lazy(() => import("./components/Projects.jsx"));
 const Skills = lazy(() => import("./components/Skills.jsx"));
+const Certifications = lazy(() => import("./components/Certifications.jsx"));
 const Education = lazy(() => import("./components/Education.jsx"));
 const Languages = lazy(() => import("./components/Languages.jsx"));
 const Leadership = lazy(() => import("./components/Leadership.jsx"));
@@ -38,6 +39,7 @@ function Portfolio() {
     import("./components/Experience.jsx");
     import("./components/Projects.jsx");
     import("./components/Skills.jsx");
+    import("./components/Certifications.jsx");
     import("./components/Education.jsx");
     import("./components/Languages.jsx");
     import("./components/Leadership.jsx");
@@ -60,6 +62,7 @@ function Portfolio() {
               <Experience />
               <Projects />
               <Skills />
+              <Certifications />
               <Education />
               <Languages />
               <Leadership />

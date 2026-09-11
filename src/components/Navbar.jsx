@@ -12,6 +12,7 @@ import {
   FiUser,
   FiX,
 } from "react-icons/fi";
+import { TbCertificate } from "react-icons/tb";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { profileData } from "../data/profile.js";
@@ -32,6 +33,7 @@ export default function Navbar() {
     { href: "#experience", label: t.nav.experience, icon: FiBriefcase },
     { href: "#projects", label: t.nav.projects, icon: FiFolder },
     { href: "#skills", label: t.nav.skills, icon: FiCpu },
+    { href: "#certifications", label: t.nav.certifications, icon: TbCertificate },
     { href: "#education", label: t.nav.education, icon: FiAward },
     { href: "#contact", label: t.nav.contact, icon: FiMail },
   ];
@@ -85,7 +87,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="rounded-full px-3.5 py-1.5 text-xs font-bold text-slate-700 transition hover:bg-blue-50 hover:text-electric focus:outline-cyan-400 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:text-cyan-300"
+              className="rounded-full px-2.5 xl:px-3.5 py-1.5 text-xs font-bold text-slate-700 transition hover:bg-blue-50 hover:text-electric focus:outline-cyan-400 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:text-cyan-300"
             >
               {link.label}
             </a>
