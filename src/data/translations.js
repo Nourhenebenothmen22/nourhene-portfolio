@@ -8,10 +8,14 @@ export const translations = {
       logo: "Nourhene Ben Othmen",
       logoAlt: "Logo de Nourhene Ben Othmen",
       about: "À propos",
-      skills: "Compétences",
+      experience: "Expérience",
       projects: "Projets",
+      skills: "Compétences",
       education: "Formation",
+      languagesSec: "Langues",
       leadership: "Leadership",
+      contact: "Contact",
+      available: "Disponible pour opportunités",
       menu: "Ouvrir le menu",
       close: "Fermer le menu",
       theme: "Changer le thème",
@@ -30,7 +34,14 @@ export const translations = {
       typingWords: ["Intelligence Artificielle", "Data Science", "Machine Learning", "Big Data", "Développement Full Stack", "MLOps"],
       cv: "Télécharger mon CV",
       projects: "Voir mes projets",
+      contactBtn: "Me contacter",
       imageAlt: "Portrait professionnel de Nourhene Ben Othmen",
+      stats: {
+        projects: { value: "6+", label: "Projets & plateformes" },
+        experience: { value: "2", label: "Stages IA & RAG" },
+        languages: { value: "4", label: "Langues maîtrisées" },
+        education: { value: "BAC+5", label: "Ingénieure IA en cours" },
+      },
       social: {
         linkedin: "Profil LinkedIn",
         github: "Profil GitHub",
@@ -115,6 +126,7 @@ export const translations = {
     },
     projects: {
       buttons: { github: "Code GitHub", youtube: "Démo YouTube", details: "Détails" },
+      filters: { all: "Tous les projets", ai: "IA & RAG", web: "Full Stack Web" },
       alt: "Image du projet",
       items: {
         qraity: {
@@ -190,10 +202,14 @@ export const translations = {
       logo: "Nourhene Ben Othmen",
       logoAlt: "Nourhene Ben Othmen logo",
       about: "About",
-      skills: "Skills",
+      experience: "Experience",
       projects: "Projects",
+      skills: "Skills",
       education: "Education",
+      languagesSec: "Languages",
       leadership: "Leadership",
+      contact: "Contact",
+      available: "Open to opportunities",
       menu: "Open menu",
       close: "Close menu",
       theme: "Change theme",
@@ -212,7 +228,14 @@ export const translations = {
       typingWords: ["Artificial Intelligence", "Data Science", "Machine Learning", "Big Data", "Full Stack Development", "MLOps"],
       cv: "Download CV",
       projects: "View Projects",
+      contactBtn: "Contact me",
       imageAlt: "Professional portrait of Nourhene Ben Othmen",
+      stats: {
+        projects: { value: "6+", label: "Projects & Platforms" },
+        experience: { value: "2", label: "AI & RAG Internships" },
+        languages: { value: "4", label: "Languages" },
+        education: { value: "Master's", label: "AI Engineering degree" },
+      },
       social: {
         linkedin: "LinkedIn profile",
         github: "GitHub profile",
@@ -297,6 +320,7 @@ export const translations = {
     },
     projects: {
       buttons: { github: "GitHub Code", youtube: "YouTube Demo", details: "Details" },
+      filters: { all: "All Projects", ai: "AI & RAG", web: "Full Stack Web" },
       alt: "Project image",
       items: {
         qraity: {
@@ -372,10 +396,14 @@ export const translations = {
       logo: "نورهان بن عثمان",
       logoAlt: "شعار نورهان بن عثمان",
       about: "نبذة",
-      skills: "المهارات",
+      experience: "الخبرات",
       projects: "المشاريع",
+      skills: "المهارات",
       education: "التكوين",
+      languagesSec: "اللغات",
       leadership: "القيادة",
+      contact: "اتصل بي",
+      available: "متاحة للفرص المهنية",
       menu: "فتح القائمة",
       close: "إغلاق القائمة",
       theme: "تغيير النمط",
@@ -394,7 +422,14 @@ export const translations = {
       typingWords: ["الذكاء الاصطناعي", "علوم البيانات", "تعلم الآلة", "البيانات الضخمة", "تطوير Full Stack", "MLOps"],
       cv: "تحميل السيرة الذاتية",
       projects: "عرض المشاريع",
+      contactBtn: "تواصل معي",
       imageAlt: "صورة مهنية لنورهان بن عثمان",
+      stats: {
+        projects: { value: "6+", label: "مشاريع ومنصات" },
+        experience: { value: "2", label: "تدريبات بالذكاء الاصطناعي" },
+        languages: { value: "4", label: "لغات متقنة" },
+        education: { value: "BAC+5", label: "طالبة هندسة ذكاء اصطناعي" },
+      },
       social: {
         linkedin: "حساب LinkedIn",
         github: "حساب GitHub",
@@ -479,6 +514,7 @@ export const translations = {
     },
     projects: {
       buttons: { github: "كود GitHub", youtube: "عرض YouTube", details: "التفاصيل" },
+      filters: { all: "جميع المشاريع", ai: "الذكاء الاصطناعي و RAG", web: "تطوير الويب المتكامل" },
       alt: "صورة المشروع",
       items: {
         qraity: {
