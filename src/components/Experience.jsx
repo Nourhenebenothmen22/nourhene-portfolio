@@ -1,4 +1,4 @@
-import { FiBriefcase, FiCalendar, FiMapPin } from "react-icons/fi";
+import { FiAward, FiBriefcase, FiCalendar, FiExternalLink, FiMapPin } from "react-icons/fi";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { experienceData } from "../data/experience.js";
 import useInView from "../hooks/useInView.js";
@@ -91,6 +91,12 @@ function ExperienceCard({ item, index, sideClass, copy }) {
             {copy.labels.position}: {item.position}
           </p>
 
+          {item.project && (
+            <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-cyan-700 dark:text-cyan-300">
+              <span className="opacity-80">{copy.labels.project || "Projet"} :</span> {item.project}
+            </p>
+          )}
+
           <div className="mt-6">
             <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-300">{copy.labels.missions}</h4>
             <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
@@ -111,6 +117,21 @@ function ExperienceCard({ item, index, sideClass, copy }) {
               ))}
             </div>
           </div>
+
+          {item.certificate && (
+            <div className="mt-6 border-t border-slate-100 pt-4 dark:border-white/10">
+              <a
+                href={item.certificate.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/cert inline-flex items-center gap-2 rounded-xl border border-blue-200/80 bg-blue-50/70 px-3.5 py-2 text-xs font-semibold text-blue-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-100 dark:border-cyan-400/20 dark:bg-cyan-950/40 dark:text-cyan-200 dark:hover:border-cyan-400/40 dark:hover:bg-cyan-900/40"
+              >
+                <FiAward className="shrink-0 text-base text-amber-500 dark:text-amber-400" />
+                <span>{item.certificate.title}</span>
+                <FiExternalLink className="shrink-0 text-xs opacity-70 transition-transform group-hover/cert:-translate-y-0.5 group-hover/cert:translate-x-0.5 rtl:group-hover/cert:-translate-x-0.5" />
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </article>
