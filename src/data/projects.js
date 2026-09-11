@@ -1,23 +1,44 @@
 export const projects = [
   {
-    key: "qraity",
+    key: "aiPfeHunter",
     category: "ai",
+    badge: "Projet Personnel",
     image: "/images/projects/qraity-cover.webp",
-    tags: ["AI Layer", "Learning Analytics", "Student Progress", "Course Visualization", "Video Learning", "Dashboard"],
-    github: "#", // Replace with the Qraity GitHub repository URL when available.
+    tags: ["Python 3", "Docker", "OpenClaw", "Telegram API", "Webhooks Google Sheets", "NLP"],
+    github: "https://github.com/Nourhenebenothmen22",
+    youtube: "https://www.youtube.com/@JnounAI",
+  },
+  {
+    key: "khedmaAi",
+    category: "ai",
+    badge: "Projet Personnel",
+    image: "/images/projects/darstore-cover.webp",
+    tags: ["React 19", "Tailwind CSS", "PostgreSQL", "Prisma", "Multi-LLM Gateway", "CI/CD"],
+    github: "https://github.com/Nourhenebenothmen22",
     youtube: "https://www.youtube.com/@JnounAI",
   },
   {
     key: "darstore",
     category: "ai",
+    badge: "Projet d'Études",
     image: "/images/projects/darstore-cover.webp",
-    tags: ["PERN Stack", "FastAPI", "IA/ML", "RAG", "Monitoring", "Elasticsearch", "Kibana"],
-    github: "#", // Replace with the DarStore GitHub repository URL when available.
+    tags: ["Microservices", "Python", "RAG Hybride", "Prometheus", "Grafana", "Docker"],
+    github: "https://github.com/Nourhenebenothmen22",
+    youtube: "https://www.youtube.com/@JnounAI",
+  },
+  {
+    key: "qraity",
+    category: "ai",
+    badge: "Plateforme IA",
+    image: "/images/projects/qraity-cover.webp",
+    tags: ["AI Layer", "Learning Analytics", "Student Progress", "Course Visualization", "Dashboard"],
+    github: "https://github.com/Nourhenebenothmen22",
     youtube: "https://www.youtube.com/@JnounAI",
   },
   {
     key: "elearning",
     category: "web",
+    badge: "Full Stack Web",
     image: "/images/projects/elearning-cover.webp",
     tags: ["PHP", "MySQL", "SQL", "Bootstrap", "HTML", "CSS", "Authentication"],
     github: "https://github.com/Nourhenebenothmen22/e-leaning",
@@ -26,6 +47,7 @@ export const projects = [
   {
     key: "tomato",
     category: "web",
+    badge: "Full Stack Web",
     image: "/images/projects/tomato-cover.webp",
     tags: ["MERN Stack", "WebSockets", "Stripe", "Food Delivery", "Real-Time Tracking"],
     github: "https://github.com/Nourhenebenothmen22/Food_App",

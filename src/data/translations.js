@@ -11,11 +11,12 @@ export const translations = {
       experience: "Expérience",
       projects: "Projets",
       skills: "Compétences",
+      certifications: "Certifications",
       education: "Formation",
       languagesSec: "Langues",
       leadership: "Leadership",
       contact: "Contact",
-      available: "Disponible pour opportunités",
+      available: "Recherche de Stage PFE (6 mois) — Début 2027",
       menu: "Ouvrir le menu",
       close: "Fermer le menu",
       theme: "Changer le thème",
@@ -29,18 +30,18 @@ export const translations = {
     hero: {
       title: "Construire des solutions digitales utiles, intelligentes et évolutives",
       name: "Nourhene Ben Othmen",
-      subtitle: "Étudiante Ingénieure IA & Data Science | Développeuse Full Stack JavaScript",
+      subtitle: "Élève-Ingénieure en Génie Logiciel • Spécialité IA & Data Science | Recherche de Stage PFE (6 mois) — Début 2027",
       typingPrefix: "Spécialisée en",
-      typingWords: ["Intelligence Artificielle", "Data Science", "Machine Learning", "Big Data", "Développement Full Stack", "MLOps"],
+      typingWords: ["Intelligence Artificielle", "Data Science", "RAG & Agents LLM", "Architectures Microservices", "Full Stack Next.js / Python", "MLOps & Docker"],
       cv: "Télécharger mon CV",
       projects: "Voir mes projets",
       contactBtn: "Me contacter",
       imageAlt: "Portrait professionnel de Nourhene Ben Othmen",
       stats: {
-        projects: { value: "6+", label: "Projets & plateformes" },
+        pfe: { value: "PFE", label: "Stage 6 mois — Début 2027" },
+        projects: { value: "6+", label: "Projets d'ingénierie" },
         experience: { value: "2", label: "Stages IA & RAG" },
-        languages: { value: "4", label: "Langues maîtrisées" },
-        education: { value: "BAC+5", label: "Ingénieure IA en cours" },
+        certifications: { value: "7+", label: "Certifications IBM, Cisco, Linux" },
       },
       social: {
         linkedin: "Profil LinkedIn",
@@ -129,13 +130,21 @@ export const translations = {
       filters: { all: "Tous les projets", ai: "IA & RAG", web: "Full Stack Web" },
       alt: "Image du projet",
       items: {
+        aiPfeHunter: {
+          title: "AI-PFE-Hunter — Agent Autonome d’Automatisation & de Veille IA",
+          description: "Conception d’un pipeline conteneurisé sous Docker tournant 24/7 pour éliminer 100% des tâches manuelles de recherche de stages PFE, d’été et premiers emplois en IA/Data. Moteur d’évaluation sémantique qualifiant les offres pour 2026/2027 avec architecture anti-redondance garantissant 0 doublon, et synchronisation temps réel entre bot Telegram interactif et dashboard Google Sheets automatisé.",
+        },
+        khedmaAi: {
+          title: "Khedma AI — Plateforme SaaS Multi-Tenant de Génération RH",
+          description: "Passerelle Multi-LLM résiliente intégrant 5 backends d’inférence (OpenRouter, OpenAI, Anthropic, Hugging Face, Ollama) avec streaming temps réel (SSE) et fallback sandbox. Architecture d’onboarding sans friction avec double authentification sécurisée et transactions atomiques Prisma. Schéma PostgreSQL multi-tenant strict avec index composite B-Tree, quotas mensuels et rate limiting HTTP 429 (41 tests sous Vitest).",
+        },
+        darstore: {
+          title: "DarStore — Plateforme E-Commerce Cloud-Native assistée par IA",
+          description: "Architecture microservices distribuée supportant des pipelines de données multi-tenants et l’internationalisation complète. Assistant de recherche RAG hybride combinant recherche lexicale BM25 et vecteurs denses avec protection contre les injections de prompts. Déploiement de modèles ML en production (tarification dynamique R²=0,956, RMSE 105.79 et segmentation RFM), et observabilité temps réel via Prometheus et Grafana.",
+        },
         qraity: {
           title: "Qraity — Plateforme d’Apprentissage Intelligente",
           description: "Qraity est une plateforme d’apprentissage en cours de développement, conçue pour visualiser les cours, les vidéos pédagogiques et le parcours d’apprentissage des étudiants. Une couche IA est en cours d’intégration afin d’analyser l’achèvement des étudiants, suivre leur rythme d’éducation, identifier les tendances d’apprentissage et fournir des insights utiles pour améliorer l’expérience pédagogique.",
-        },
-        darstore: {
-          title: "DarStore — Plateforme E-Commerce Intelligente",
-          description: "Plateforme e-commerce intelligente développée avec PostgreSQL, Express.js, React.js et Node.js, avec des services IA basés sur FastAPI. Elle intègre la gestion des produits, utilisateurs, commandes, paiements, avis, paniers, wishlists, chatbot RAG, recherche vectorielle avec pgvector, BM25, RRF, segmentation client, recherche vocale, prédiction de prix, monitoring Prometheus/Grafana et analytics Elasticsearch/Kibana.",
         },
         elearning: {
           title: "Plateforme E-Learning",
@@ -151,18 +160,18 @@ export const translations = {
       items: {
         iteam: {
           title: "iTeam University",
-          degree: "Cycle Ingénieur en Intelligence Artificielle & Data Science",
-          year: "2024 — Présent",
+          degree: "Diplôme d’Ingénieur en Génie Logiciel (Spécialisation IA & Data Science)",
+          year: "2024 — 2027",
+        },
+        issat: {
+          title: "ISSAT Mateur, Université de Carthage",
+          degree: "Licence en Sciences et Technologies de l’Information : Réseaux & Télécommunications",
+          year: "2021 — 2024",
         },
         jobgate: {
           title: "Full Stack JS Developer — JobGate",
           degree: "Formation en ligne intensive de 3 mois couvrant JavaScript, Node.js, Express.js, React.js, REST APIs, bases de données, Git, déploiement et bonnes pratiques full stack.",
           year: "Déc 2024 — Fév 2025",
-        },
-        issat: {
-          title: "ISSAT Mateur",
-          degree: "Licence en Réseaux et Télécommunications",
-          year: "2021 — 2024",
         },
         baccalaureate: {
           title: "Baccalauréat Mathématiques",
@@ -205,11 +214,12 @@ export const translations = {
       experience: "Experience",
       projects: "Projects",
       skills: "Skills",
+      certifications: "Certifications",
       education: "Education",
       languagesSec: "Languages",
       leadership: "Leadership",
       contact: "Contact",
-      available: "Open to opportunities",
+      available: "Seeking 6-Month PFE Internship — Early 2027",
       menu: "Open menu",
       close: "Close menu",
       theme: "Change theme",
@@ -223,18 +233,18 @@ export const translations = {
     hero: {
       title: "Building useful, intelligent, and scalable digital solutions",
       name: "Nourhene Ben Othmen",
-      subtitle: "AI & Data Science Engineering Student | Full Stack JavaScript Developer",
+      subtitle: "Software Engineering Student • AI & Data Science Specialist | Seeking 6-Month PFE Internship — Early 2027",
       typingPrefix: "Focused on",
-      typingWords: ["Artificial Intelligence", "Data Science", "Machine Learning", "Big Data", "Full Stack Development", "MLOps"],
+      typingWords: ["Artificial Intelligence", "Data Science", "RAG & LLM Agents", "Microservices Architectures", "Full Stack Next.js / Python", "MLOps & Docker"],
       cv: "Download CV",
       projects: "View Projects",
       contactBtn: "Contact me",
       imageAlt: "Professional portrait of Nourhene Ben Othmen",
       stats: {
-        projects: { value: "6+", label: "Projects & Platforms" },
+        pfe: { value: "PFE", label: "6-Month Internship (2027)" },
+        projects: { value: "6+", label: "Engineering Projects" },
         experience: { value: "2", label: "AI & RAG Internships" },
-        languages: { value: "4", label: "Languages" },
-        education: { value: "Master's", label: "AI Engineering degree" },
+        certifications: { value: "7+", label: "Certifications (IBM, Cisco, Linux)" },
       },
       social: {
         linkedin: "LinkedIn profile",
@@ -323,13 +333,21 @@ export const translations = {
       filters: { all: "All Projects", ai: "AI & RAG", web: "Full Stack Web" },
       alt: "Project image",
       items: {
+        aiPfeHunter: {
+          title: "AI-PFE-Hunter — Autonomous AI Automation & Monitoring Agent",
+          description: "Containerized Docker pipeline running 24/7 eliminating 100% of manual search tasks for final-year (PFE), summer, and entry-level AI/Data roles. Includes a semantic evaluation engine qualifying opportunities for 2026/2027 with 0 duplicates, and instant real-time dispatch between an interactive Telegram bot and automated Google Sheets dashboard.",
+        },
+        khedmaAi: {
+          title: "Khedma AI — Multi-Tenant HR Generation SaaS Platform",
+          description: "Multi-tenant HR SaaS platform featuring a resilient Multi-LLM Gateway integrating 5 inference backends (OpenRouter, OpenAI, Anthropic, Hugging Face, Ollama) with real-time streaming (SSE) and sandbox fallback. Secure onboarding with Prisma atomic transactions, multi-tenant PostgreSQL schema with composite B-Tree indexes, HTTP 429 rate limiting, and multilingual SPA (FR/EN/AR RTL, 41 Vitest tests).",
+        },
+        darstore: {
+          title: "DarStore — AI-Assisted Cloud-Native E-Commerce Platform",
+          description: "Distributed microservices architecture supporting multi-tenant data pipelines and full internationalization. Hybrid RAG search assistant combining BM25 lexical search and dense vectors with prompt injection safeguards. Deployed production machine learning models (dynamic pricing R²=0.956 and RFM segmentation), with real-time observability via Prometheus and Grafana.",
+        },
         qraity: {
           title: "Qraity — Intelligent Learning Platform",
           description: "Qraity is a learning platform currently under development, designed to visualize courses, educational videos, and student learning journeys. An AI layer is being integrated to analyze student achievement, track learning rhythm, identify learning patterns, and provide useful insights to improve the educational experience.",
-        },
-        darstore: {
-          title: "DarStore — Intelligent E-Commerce Platform",
-          description: "Intelligent e-commerce platform built with PostgreSQL, Express.js, React.js and Node.js, with FastAPI-based AI services. It includes product management, users, orders, payments, reviews, carts, wishlists, RAG chatbot, vector search with pgvector, BM25, RRF, customer segmentation, voice search, price prediction, Prometheus/Grafana monitoring, and Elasticsearch/Kibana analytics.",
         },
         elearning: {
           title: "E-Learning Platform",
@@ -345,18 +363,18 @@ export const translations = {
       items: {
         iteam: {
           title: "iTeam University",
-          degree: "Engineering Cycle in Artificial Intelligence & Data Science",
-          year: "2024 — Present",
+          degree: "Software Engineering Degree (AI & Data Science Specialization)",
+          year: "2024 — 2027",
+        },
+        issat: {
+          title: "ISSAT Mateur, University of Carthage",
+          degree: "Bachelor’s in Information Science & Technology : Networks & Telecommunications",
+          year: "2021 — 2024",
         },
         jobgate: {
           title: "Full Stack JS Developer — JobGate",
           degree: "Intensive 3-month online training covering JavaScript, Node.js, Express.js, React.js, REST APIs, databases, Git, deployment, and full stack best practices.",
           year: "Dec 2024 — Feb 2025",
-        },
-        issat: {
-          title: "ISSAT Mateur",
-          degree: "Bachelor’s Degree in Networks and Telecommunications",
-          year: "2021 — 2024",
         },
         baccalaureate: {
           title: "Mathematics Baccalaureate",
@@ -399,11 +417,12 @@ export const translations = {
       experience: "الخبرات",
       projects: "المشاريع",
       skills: "المهارات",
+      certifications: "الشهادات",
       education: "التكوين",
       languagesSec: "اللغات",
       leadership: "القيادة",
       contact: "اتصل بي",
-      available: "متاحة للفرص المهنية",
+      available: "بحث عن تدريب PFE كمهندسة (6 أشهر) — بداية 2027",
       menu: "فتح القائمة",
       close: "إغلاق القائمة",
       theme: "تغيير النمط",
@@ -417,18 +436,18 @@ export const translations = {
     hero: {
       title: "بناء حلول رقمية مفيدة وذكية وقابلة للتطوير",
       name: "نورهان بن عثمان",
-      subtitle: "طالبة هندسة في الذكاء الاصطناعي وعلوم البيانات | مطورة Full Stack JavaScript",
+      subtitle: "طالبة هندسة برمجيات • تخصص ذكاء اصطناعي وعلوم البيانات | بحث عن تدريب PFE (6 أشهر) — بداية 2027",
       typingPrefix: "متخصصة في",
-      typingWords: ["الذكاء الاصطناعي", "علوم البيانات", "تعلم الآلة", "البيانات الضخمة", "تطوير Full Stack", "MLOps"],
+      typingWords: ["الذكاء الاصطناعي", "علوم البيانات", "تقنية RAG ووكلاء LLM", "معمارية الخدمات المصغرة", "تطوير Next.js و Python المتكامل", "MLOps و Docker"],
       cv: "تحميل السيرة الذاتية",
       projects: "عرض المشاريع",
       contactBtn: "تواصل معي",
       imageAlt: "صورة مهنية لنورهان بن عثمان",
       stats: {
-        projects: { value: "6+", label: "مشاريع ومنصات" },
+        pfe: { value: "PFE", label: "تدريب تخرج (بداية 2027)" },
+        projects: { value: "6+", label: "مشاريع هندسية متقدمة" },
         experience: { value: "2", label: "تدريبات بالذكاء الاصطناعي" },
-        languages: { value: "4", label: "لغات متقنة" },
-        education: { value: "BAC+5", label: "طالبة هندسة ذكاء اصطناعي" },
+        certifications: { value: "7+", label: "شهادات IBM و Cisco و Linux" },
       },
       social: {
         linkedin: "حساب LinkedIn",

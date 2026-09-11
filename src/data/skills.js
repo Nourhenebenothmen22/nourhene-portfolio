@@ -1,43 +1,108 @@
-import { FaDatabase, FaNodeJs, FaReact } from "react-icons/fa6";
-import { SiElasticsearch, SiExpress, SiGrafana, SiKibana, SiMongodb, SiPostgresql, SiPrometheus } from "react-icons/si";
-import { TbApi, TbChartLine, TbCloudDataConnection, TbGitBranch, TbServerCog } from "react-icons/tb";
+import {
+  FaCode,
+  FaDatabase,
+  FaDocker,
+  FaLaptopCode,
+  FaServer,
+  FaShieldHalved,
+  FaWrench,
+} from "react-icons/fa6";
+import { TbBrain, TbCloudDataConnection, TbCpu } from "react-icons/tb";
 
-export const stackCycles = [
+export const technicalSkills = [
   {
-    id: "development",
+    id: "frontend",
+    title: {
+      fr: "Frontend & UI",
+      en: "Frontend & UI",
+      ar: "الواجهة الأمامية وتجربة المستخدم",
+    },
     accent: "cyan",
-    icon: TbApi,
-    nodes: [
-      { label: "React.js", icon: FaReact },
-      { label: "Node.js", icon: FaNodeJs },
-      { label: "Express.js", icon: SiExpress },
-      { label: "MongoDB", icon: SiMongodb },
-      { label: "PostgreSQL", icon: SiPostgresql },
+    icon: FaLaptopCode,
+    skills: [
+      "Next.js (App Router, SSR)",
+      "React 19",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "Tailwind CSS",
+      "TanStack React Query",
+      "Recharts",
+      "HTML5 / CSS3",
     ],
   },
   {
-    id: "mlops",
+    id: "backend",
+    title: {
+      fr: "Backend & Systèmes",
+      en: "Backend & Systems",
+      ar: "الأنظمة والواجهات الخلفية",
+    },
+    accent: "blue",
+    icon: FaServer,
+    skills: [
+      "Node.js 22",
+      "NestJS",
+      "Express 5",
+      "Python (FastAPI)",
+      "Architectures Microservices",
+      "API REST",
+      "WebSockets",
+      "BullMQ",
+      "Redis",
+    ],
+  },
+  {
+    id: "ai_data",
+    title: {
+      fr: "Data & Intégration IA",
+      en: "Data & AI Integration",
+      ar: "البيانات والذكاء الاصطناعي",
+    },
     accent: "violet",
-    icon: TbServerCog,
-    nodes: [
-      { label: "DVC", icon: TbGitBranch },
-      { label: "MLflow", icon: TbChartLine },
-      { label: "Elasticsearch", icon: SiElasticsearch },
-      { label: "Kibana", icon: SiKibana },
-      { label: "Prometheus", icon: SiPrometheus },
-      { label: "Grafana", icon: SiGrafana },
+    icon: TbBrain,
+    skills: [
+      "RAG Hybride (BM25 + Dense Embeddings ONNX)",
+      "LangGraph",
+      "Multi-LLM Gateways",
+      "PostgreSQL 16 (pgvector / HNSW)",
+      "MongoDB",
+      "Prisma ORM",
+      "Scikit-Learn",
     ],
   },
   {
-    id: "bigdata",
+    id: "devops_qa",
+    title: {
+      fr: "DevOps, Sécurité & QA",
+      en: "DevOps, Security & QA",
+      ar: "DevOps، الأمان وجودة البرمجيات",
+    },
     accent: "emerald",
-    icon: TbCloudDataConnection,
-    nodes: [
-      { label: "NiFi", icon: TbCloudDataConnection },
-      { label: "HDFS", icon: FaDatabase },
-      { label: "MapReduce", icon: TbServerCog },
-      { label: "Hive", icon: FaDatabase },
-      { label: "Matplotlib", icon: TbChartLine },
+    icon: FaShieldHalved,
+    skills: [
+      "Docker & Docker Compose",
+      "CI/CD (GitHub Actions)",
+      "Vitest & Playwright",
+      "Tests de charge k6",
+      "Sécurité applicative (JWT, 2FA TOTP, CSRF, Argon2, RBAC)",
+    ],
+  },
+  {
+    id: "tools",
+    title: {
+      fr: "Outils & Protocoles",
+      en: "Tools & Protocols",
+      ar: "الأدوات والبروتوكولات",
+    },
+    accent: "amber",
+    icon: FaWrench,
+    skills: [
+      "Git & GitHub",
+      "Postman",
+      "OpenAPI 3.0 (Swagger)",
+      "Zod",
+      "Server-Sent Events (SSE)",
+      "Prometheus & Grafana",
     ],
   },
 ];
