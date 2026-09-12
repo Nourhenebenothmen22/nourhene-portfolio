@@ -87,9 +87,13 @@ export default function Hero() {
           {/* Left: Text & CTAs */}
           <div className="text-center lg:text-start">
             {/* Availability / Eyebrow badge */}
-            <motion.div variants={shouldAnimate ? fadeUp : {}} className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-950/40 dark:text-cyan-200">
-              <TbSparkles className="text-cyan-600 dark:text-cyan-400" />
-              <span>{t.sections.aboutEyebrow} — {profile.footerRole}</span>
+            {/* Availability Eyebrow */}
+            <motion.div variants={shouldAnimate ? fadeUp : {}} className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-black text-emerald-800 dark:border-emerald-400/30 dark:bg-emerald-950/40 dark:text-emerald-300 shadow-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              <span>{t.nav.available}</span>
             </motion.div>
 
             {/* Main title */}
@@ -129,7 +133,7 @@ export default function Hero() {
               className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
             >
               <a
-                href={publicAsset("/cv/Nourhene-Ben-Othmen-CV.pdf")}
+                href={publicAsset("/cv/Resume_Nourhene_Ben_Othmen.pdf")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="shimmer-btn inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 via-cyan-500 to-violet-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:-translate-y-0.5 hover:shadow-cyan-500/30 focus:outline-cyan-400"
@@ -137,6 +141,16 @@ export default function Hero() {
                 <FiDownload className="text-base" />
                 <span>{t.hero.cv}</span>
               </a>
+
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent("open-ai-copilot"))}
+                className="group relative inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-5 py-3 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/20 dark:border-cyan-400/30 dark:bg-cyan-950/50 dark:text-cyan-200 dark:hover:bg-cyan-900/50 focus:outline-cyan-400"
+              >
+                <TbSparkles className="text-base text-cyan-600 animate-pulse dark:text-cyan-300" />
+                <span>{language === "en" ? "Ask AI Copilot" : language === "ar" ? "اسأل المساعد الذكي" : "Poser une question à l'IA"}</span>
+                <span className="flex h-2 w-2 rounded-full bg-cyan-400" />
+              </button>
 
               <a
                 href="#contact"

@@ -4,7 +4,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { publicAsset } from "../utils/publicAsset.js";
 
 const heroProfileImage = "/image-portfolio/nourhene-profile.webp";
-const DURATION = 2000;
+const DURATION = 600;
 
 export default function ProfileIntro({ onComplete }) {
   const { t } = useLanguage();
@@ -20,7 +20,25 @@ export default function ProfileIntro({ onComplete }) {
     onCompleteRef.current = onComplete;
   });
 
+  const finishIntro = () => {
+    if (!calledRef.current) {
+      calledRef.current = true;
+      try {
+        sessionStorage.setItem("hasSeenIntro", "true");
+      } catch (e) {}
+      onCompleteRef.current?.();
+    }
+  };
+
   useEffect(() => {
+    // If already seen during this session, skip immediately
+    try {
+      if (sessionStorage.getItem("hasSeenIntro") === "true") {
+        finishIntro();
+        return;
+      }
+    } catch (e) {}
+
     const restore = [];
     const lock = (el) => {
       const prev = el.style.overflow;
@@ -29,36 +47,24 @@ export default function ProfileIntro({ onComplete }) {
     };
     lock(document.documentElement);
     lock(document.body);
-    return () => restore.forEach((fn) => fn());
-  }, []);
 
-  useEffect(() => {
-    calledRef.current = false;
-
-    timerRef.current = setTimeout(() => {
-      calledRef.current = true;
-      onCompleteRef.current();
-    }, DURATION);
-
-    safetyRef.current = setTimeout(() => {
-      if (!calledRef.current) {
-        calledRef.current = true;
-        onCompleteRef.current();
-      }
-    }, DURATION + 2000);
+    timerRef.current = setTimeout(finishIntro, DURATION);
+    safetyRef.current = setTimeout(finishIntro, DURATION + 800);
 
     return () => {
       clearTimeout(timerRef.current);
       clearTimeout(safetyRef.current);
+      restore.forEach((fn) => fn());
     };
-  }, [DURATION]);
+  }, []);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#080a14]"
+      onClick={finishIntro}
+      className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-[#080a14]"
       initial={shouldAnimate ? { opacity: 0 } : { opacity: 1 }}
-      animate={{ opacity: 1, transition: { duration: 0.4, ease: "easeOut" } }}
-      exit={shouldAnimate ? { opacity: 0, scale: 1.04, filter: "blur(4px)", transition: { duration: 0.35, ease: "easeInOut" } } : { opacity: 0, transition: { duration: 0.1 } }}
+      animate={{ opacity: 1, transition: { duration: 0.3, ease: "easeOut" } }}
+      exit={shouldAnimate ? { opacity: 0, scale: 1.02, filter: "blur(2px)", transition: { duration: 0.25, ease: "easeInOut" } } : { opacity: 0 }}
       aria-label={t.loadingLabel}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-[#080a14] via-[#0c0e24] to-[#080a14]" />

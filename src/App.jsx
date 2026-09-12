@@ -19,6 +19,7 @@ const Languages = lazy(() => import("./components/Languages.jsx"));
 const Leadership = lazy(() => import("./components/Leadership.jsx"));
 const Contact = lazy(() => import("./components/Contact.jsx"));
 const Footer = lazy(() => import("./components/Footer.jsx"));
+const AICopilot = lazy(() => import("./components/AICopilot.jsx"));
 const ToastContainer = lazy(() => import("react-toastify").then((m) => ({ default: m.ToastContainer })));
 
 function Portfolio() {
@@ -45,6 +46,7 @@ function Portfolio() {
     import("./components/Leadership.jsx");
     import("./components/Contact.jsx");
     import("./components/Footer.jsx");
+    import("./components/AICopilot.jsx");
     import("react-toastify");
   }, []);
 
@@ -71,6 +73,9 @@ function Portfolio() {
           </main>
           <Footer />
           <ScrollToTop />
+          <Suspense fallback={null}>
+            <AICopilot />
+          </Suspense>
           <ToastContainer
             position={language === "ar" ? "top-left" : "top-right"}
             autoClose={2500}
