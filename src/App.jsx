@@ -68,14 +68,12 @@ function Portfolio() {
               <Education />
               <Languages />
               <Leadership />
+              <AICopilot />
               <Contact />
             </Suspense>
           </main>
           <Footer />
           <ScrollToTop />
-          <Suspense fallback={null}>
-            <AICopilot />
-          </Suspense>
           <ToastContainer
             position={language === "ar" ? "top-left" : "top-right"}
             autoClose={2500}

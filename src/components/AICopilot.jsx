@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   FiSend,
-  FiX,
-  FiMinimize2,
-  FiMaximize2,
   FiTrash2,
   FiDownload,
   FiMail,
   FiCheck,
   FiCopy,
+  FiArrowDown,
 } from 'react-icons/fi';
 import { TbSparkles, TbRobot, TbBolt } from 'react-icons/tb';
 import { useLanguage } from '../context/LanguageContext.jsx';
@@ -17,11 +15,12 @@ import { publicAsset } from '../utils/publicAsset.js';
 
 const knowledgeBase = {
   fr: {
-    welcome: "Bonjour ! Je suis Aria, le Copilot IA de Nourhene Ben Othmen. Posez-moi vos questions sur ses compétences en IA/RAG, ses projets d'ingénierie ou sa recherche de Stage PFE (6 mois — Début 2027) !",
+    eyebrow: "Assistant Recruteur IA",
+    title: "Aria • Copilot IA Interactif",
+    subtitle: "Posez vos questions sur le profil de Nourhene, ses compétences RAG/LLM, ses projets et sa disponibilité PFE 2027.",
+    badge: "Réponse ultra-rapide < 10ms",
+    clear: "Effacer",
     placeholder: "Posez une question sur le profil de Nourhene...",
-    title: "Aria • Copilot IA",
-    badge: "Réponse instantanée < 20ms",
-    clear: "Effacer la discussion",
     prompts: [
       { label: "🎯 Stage PFE 2027", query: "Est-elle disponible pour un stage PFE début 2027 ?" },
       { label: "🧠 RAG & Multi-LLM", query: "Quelles sont ses compétences en IA, RAG et LLM ?" },
@@ -30,6 +29,7 @@ const knowledgeBase = {
       { label: "📄 Télécharger son CV", query: "Où puis-je télécharger son CV à jour ?" },
       { label: "📞 Coordonnées", query: "Comment contacter Nourhene ?" },
     ],
+    welcome: "Bonjour ! Je suis Aria, le Copilot IA de Nourhene Ben Othmen. Posez-moi vos questions sur ses compétences techniques, ses projets d'ingénierie ou sa recherche de Stage PFE (6 mois — Début 2027) !",
     responses: {
       pfe: {
         text: "**Oui, absolument !** Nourhene Ben Othmen est en recherche active d'un **Stage PFE d’Ingénieur (6 mois) débutant début 2027**.\n\n- **Formation** : Élève-Ingénieure en Génie Logiciel (Spécialisation IA & Data Science) à **iTeam University** (Tunis, Tunisie).\n- **Mobilité** : Basée à Ariana / Tunis, ouverte aux opportunités sur site, hybrides ou à distance.\n- **Disponibilité** : Début 2027 (durée flexible de 5 à 6 mois).",
@@ -39,7 +39,7 @@ const knowledgeBase = {
         ],
       },
       ai_rag: {
-        text: "Nourhene possède une expertise avancée en **IA générative, RAG Hybride et MLOps** :\n\n- **RAG Hybride** : Recherche hybride combinant recherche lexicale BM25 et vecteurs denses avec **PostgreSQL 16 (pgvector / index HNSW)** et embeddings ONNX (*all-MiniLM-L6-v2*).\n- **Multi-LLM Gateways** : Conception de passerelles résilientes intégrant 5 backends d'inférence (OpenRouter, OpenAI, Anthropic, Hugging Face, Ollama) avec streaming SSE.\n- **Agents IA** : Automatisation de flux et qualification de leads avec **LangGraph StructuredTools**.\n- **Voice-to-Voice temps réel** : Intégration de **LiveKit WebRTC** et **Silero VAD** reliés directement au pipeline RAG central.",
+        text: "Nourhene possède une expertise pointue en **IA générative, RAG Hybride et MLOps** :\n\n- **RAG Hybride** : Recherche hybride combinant recherche lexicale BM25 et vecteurs denses avec **PostgreSQL 16 (pgvector / index HNSW)** et embeddings ONNX (*all-MiniLM-L6-v2*).\n- **Multi-LLM Gateways** : Conception de passerelles résilientes intégrant 5 backends d'inférence (OpenRouter, OpenAI, Anthropic, Hugging Face, Ollama) avec streaming SSE.\n- **Agents IA** : Automatisation de flux et qualification de leads avec **LangGraph StructuredTools**.\n- **Voice-to-Voice temps réel** : Intégration de **LiveKit WebRTC** et **Silero VAD** reliés directement au pipeline RAG central.",
         actions: [
           { type: 'skills', label: 'Explorer la stack technique', href: '#skills' },
           { type: 'projects', label: 'Voir les projets IA', href: '#projects' },
@@ -80,11 +80,12 @@ const knowledgeBase = {
     },
   },
   en: {
-    welcome: "Hello! I am Aria, Nourhene Ben Othmen's AI Copilot. Ask me anything about her AI/RAG expertise, engineering projects, or her availability for a 6-month PFE Internship starting early 2027!",
+    eyebrow: "AI Recruiter Copilot",
+    title: "Aria • Interactive AI Copilot",
+    subtitle: "Ask anything about Nourhene's profile, AI & RAG skills, engineering projects, and PFE 2027 internship availability.",
+    badge: "Ultra-fast response < 10ms",
+    clear: "Clear",
     placeholder: "Ask anything about Nourhene's profile...",
-    title: "Aria • AI Copilot",
-    badge: "Instant response < 20ms",
-    clear: "Clear chat",
     prompts: [
       { label: "🎯 PFE Internship 2027", query: "Is she available for a 6-month PFE internship starting early 2027?" },
       { label: "🧠 RAG & Multi-LLM", query: "What are her skills in AI, RAG, and LLM architectures?" },
@@ -93,6 +94,7 @@ const knowledgeBase = {
       { label: "📄 Download Resume", query: "Where can I download her updated resume?" },
       { label: "📞 Contact Details", query: "How can I contact Nourhene directly?" },
     ],
+    welcome: "Hello! I am Aria, Nourhene Ben Othmen's AI Copilot. Ask me anything about her AI/RAG expertise, engineering projects, or her availability for a 6-month PFE Internship starting early 2027!",
     responses: {
       pfe: {
         text: "**Yes, absolutely!** Nourhene Ben Othmen is actively seeking a **6-Month Engineering PFE Internship starting early 2027**.\n\n- **Education**: Software Engineering Student (AI & Data Science Specialization) at **iTeam University** (Tunis, Tunisia).\n- **Mobility**: Located in Ariana / Tunis, open to on-site, hybrid, or remote positions.\n- **Timeline**: Starting January/February 2027 for 5 to 6 months.",
@@ -143,11 +145,12 @@ const knowledgeBase = {
     },
   },
   ar: {
-    welcome: "مرحباً! أنا Aria، المساعد الذكي لنورهان بن عثمان. اسألني أي سؤال عن خبراتها في الذكاء الاصطناعي و RAG، مشاريعها الهندسية، أو بحثها عن تدريب تخرج PFE كمهندسة (6 أشهر — بداية 2027)!",
+    eyebrow: "المساعد الذكي للمسؤولين عن التوظيف",
+    title: "Aria • Copilot الذكاء الاصطناعي التفاعلي",
+    subtitle: "اطرح أي سؤال في الوقت الحقيقي حول مهارات نورهان، تقنيات RAG، مشاريعها والجاهزية لتدريب PFE بداية 2027.",
+    badge: "استجابة فائقة السرعة < 10ms",
+    clear: "مسح",
     placeholder: "اطرح سؤالاً عن ملف نورهان المهني...",
-    title: "Aria • Copilot الذكاء الاصطناعي",
-    badge: "استجابة فورية < 20ms",
-    clear: "مسح المحادثة",
     prompts: [
       { label: "🎯 تدريب PFE 2027", query: "هل هي متاحة لتدريب PFE بداية 2027؟" },
       { label: "🧠 RAG ونماذج اللغة", query: "ما هي مهاراتها في الذكاء الاصطناعي وتقنية RAG؟" },
@@ -156,6 +159,7 @@ const knowledgeBase = {
       { label: "📄 تحميل السيرة الذاتية", query: "أين يمكنني تحميل السيرة الذاتية المحدثة؟" },
       { label: "📞 التواصل المباشر", query: "كيف يمكنني التواصل مع نورهان؟" },
     ],
+    welcome: "مرحباً! أنا Aria، المساعد الذكي لنورهان بن عثمان. اسألني أي سؤال عن خبراتها في الذكاء الاصطناعي و RAG، مشاريعها الهندسية، أو بحثها عن تدريب تخرج PFE كمهندسة (6 أشهر — بداية 2027)!",
     responses: {
       pfe: {
         text: "**نعم، بالتأكيد!** نورهان بن عثمان تبحث بنشاط عن **تدريب مشروع تخرج كمهندسة (PFE لمدة 6 أشهر) بداية عام 2027**.\n\n- **التكوين الأكاديمي**: طالبة مهندسة في هندسة البرمجيات (تخصص ذكاء اصطناعي وعلوم البيانات) بجامعة **iTeam University** بتونس.\n- **الموقع**: أريانة / تونس العاصمة، متاحة للعمل الحضوري، الهجين أو عن بُعد.\n- **الفترة**: بداية عام 2027 (مدة 5 إلى 6 أشهر).",
@@ -236,12 +240,9 @@ export default function AICopilot() {
   const langData = knowledgeBase[language] || knowledgeBase.fr;
   const prefersReduced = useReducedMotion();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [hasUnread, setHasUnread] = useState(true);
   const [copiedId, setCopiedId] = useState(null);
 
   const messagesEndRef = useRef(null);
@@ -261,17 +262,6 @@ export default function AICopilot() {
       },
     ]);
   }, [language]);
-
-  useEffect(() => {
-    const handleOpen = () => {
-      setIsOpen(true);
-      setIsMinimized(false);
-      setHasUnread(false);
-      setTimeout(() => inputRef.current?.focus(), 250);
-    };
-    window.addEventListener('open-ai-copilot', handleOpen);
-    return () => window.removeEventListener('open-ai-copilot', handleOpen);
-  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -294,7 +284,7 @@ export default function AICopilot() {
 
     const botMsgId = 'bot-' + Date.now();
     let currentLength = 0;
-    const chunkSize = 4;
+    const chunkSize = 8; // Ultra-fast streaming
 
     setMessages((prev) => [
       ...prev,
@@ -321,7 +311,7 @@ export default function AICopilot() {
           )
         );
       }
-    }, 12);
+    }, 6); // 6ms per chunk = lightning fast!
   };
 
   const handleCopy = (id, text) => {
@@ -345,219 +335,177 @@ export default function AICopilot() {
   };
 
   return (
-    <>
-      {!isOpen && (
+    <section
+      id="ai-copilot"
+      dir={dir}
+      className="relative scroll-mt-24 py-16 sm:py-20 overflow-hidden bg-slate-100/60 dark:bg-navy/50"
+    >
+      {/* Ambient background glow */}
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-72 w-96 rounded-full bg-cyan-500/10 blur-3xl dark:bg-cyan-500/15" />
+
+      <div className="section-shell relative">
+        {/* Section Header */}
+        <div className="mx-auto mb-8 max-w-2xl text-center">
+          <p className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300">
+            <TbSparkles className="text-sm animate-pulse" />
+            <span>{langData.eyebrow}</span>
+          </p>
+          <h2 className="text-2xl font-black text-slate-950 dark:text-white sm:text-3xl md:text-4xl">
+            {langData.title}
+          </h2>
+          <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+            {langData.subtitle}
+          </p>
+        </div>
+
+        {/* Compact, Professional AI Copilot Card */}
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-          className='fixed bottom-6 right-6 z-40 flex items-center gap-3 rtl:left-6 rtl:right-auto'
+          initial={!prefersReduced ? { opacity: 0, y: 18 } : {}}
+          whileInView={!prefersReduced ? { opacity: 1, y: 0 } : {}}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.4 }}
+          className="glass glow-border mx-auto flex max-w-2xl flex-col overflow-hidden rounded-3xl border border-slate-200/90 bg-white/95 shadow-2xl shadow-cyan-950/5 dark:border-white/10 dark:bg-slate-950/90 dark:shadow-cyan-500/5"
         >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              setIsOpen(true);
-              setIsMinimized(false);
-              setHasUnread(false);
-            }}
-            className='group relative flex items-center gap-2.5 rounded-full border border-cyan-400/40 bg-gradient-to-r from-blue-600 via-cyan-500 to-violet-600 px-4 py-3 text-white shadow-xl shadow-cyan-500/25 transition-all hover:shadow-2xl hover:shadow-cyan-500/40'
-            aria-label={langData.title}
-          >
-            <span className='relative flex h-3 w-3'>
-              <span className='absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-300 opacity-75' />
-              <span className='relative inline-flex h-3 w-3 rounded-full bg-white' />
-            </span>
-
-            <TbSparkles className='text-xl animate-pulse text-cyan-200' />
-            <span className='text-xs font-black tracking-wide uppercase sm:text-sm'>
-              {langData.title}
-            </span>
-
-            {hasUnread && (
-              <span className='absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-amber-400 text-[9px] font-black text-slate-950 shadow-sm'>
-                !
-              </span>
-            )}
-          </motion.button>
-        </motion.div>
-      )}
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            dir={dir}
-            className={`fixed z-50 overflow-hidden rounded-3xl border border-slate-200/90 bg-white/95 shadow-2xl shadow-slate-950/20 backdrop-blur-2xl dark:border-white/15 dark:bg-slate-950/95 dark:shadow-cyan-950/30 ${
-              isMinimized
-                ? 'bottom-6 right-6 h-16 w-80 rtl:left-6 rtl:right-auto'
-                : 'bottom-4 right-4 h-[580px] max-h-[92vh] w-[92vw] sm:bottom-6 sm:right-6 sm:w-[420px] rtl:left-4 rtl:right-auto sm:rtl:left-6 sm:rtl:right-auto'
-            }`}
-          >
-            <div className='flex items-center justify-between border-b border-slate-200/80 bg-slate-100/70 px-4 py-3.5 dark:border-white/10 dark:bg-white/5'>
-              <div className='flex items-center gap-2.5'>
-                <div className='relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-violet-600 text-white shadow-md shadow-cyan-500/30'>
-                  <TbRobot className='text-xl' />
-                  <span className='absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-400 dark:border-slate-950' />
-                </div>
-                <div>
-                  <div className='flex items-center gap-1.5'>
-                    <h3 className='text-sm font-black text-slate-900 dark:text-white'>
-                      {langData.title}
-                    </h3>
-                    <span className='inline-flex items-center gap-0.5 rounded-full bg-cyan-500/10 px-2 py-0.5 text-[10px] font-bold text-cyan-600 dark:text-cyan-400'>
-                      <TbBolt className='text-xs' />
-                      0ms
-                    </span>
-                  </div>
-                  <p className='text-[11px] font-medium text-slate-500 dark:text-slate-400'>
-                    {langData.badge}
-                  </p>
-                </div>
+          {/* Card Topbar */}
+          <div className="flex items-center justify-between border-b border-slate-200/80 bg-slate-50/80 px-4 py-3 dark:border-white/5 dark:bg-white/5">
+            <div className="flex items-center gap-2.5">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-violet-600 text-white shadow-sm">
+                <TbRobot className="text-lg" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-white bg-emerald-400 dark:border-slate-950" />
               </div>
-
-              <div className='flex items-center gap-1'>
-                {!isMinimized && (
-                  <button
-                    onClick={handleClear}
-                    title={langData.clear}
-                    className='rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white'
-                  >
-                    <FiTrash2 className='text-xs' />
-                  </button>
-                )}
-                <button
-                  onClick={() => setIsMinimized(!isMinimized)}
-                  className='rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white'
-                >
-                  {isMinimized ? <FiMaximize2 className='text-xs' /> : <FiMinimize2 className='text-xs' />}
-                </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className='rounded-lg p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 dark:hover:text-rose-400'
-                >
-                  <FiX className='text-sm' />
-                </button>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-black text-slate-900 dark:text-white">
+                    Aria Copilot
+                  </span>
+                  <span className="inline-flex items-center gap-0.5 rounded-full bg-cyan-500/10 px-1.5 py-0.5 text-[9px] font-bold text-cyan-600 dark:text-cyan-400">
+                    <TbBolt className="text-[10px]" />
+                    fast
+                  </span>
+                </div>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                  {langData.badge}
+                </span>
               </div>
             </div>
 
-            {!isMinimized && (
-              <div className='flex h-[calc(100%-65px)] flex-col justify-between'>
-                <div className='flex-1 space-y-4 overflow-y-auto p-4 text-xs leading-relaxed sm:text-sm'>
-                  {messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
-                    >
-                      <div
-                        className={`group relative max-w-[86%] rounded-2xl p-3.5 shadow-sm ${
-                          msg.sender === 'user'
-                            ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-blue-500/10'
-                            : 'border border-slate-200/80 bg-slate-50 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-100'
-                        }`}
-                      >
-                        <div className='whitespace-pre-line'>
-                          {msg.text}
-                          {msg.isStreaming && (
-                            <span className='inline-block h-3.5 w-1.5 translate-y-0.5 animate-pulse bg-cyan-500 ml-1' />
-                          )}
-                        </div>
+            <button
+              onClick={handleClear}
+              title={langData.clear}
+              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-semibold text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <FiTrash2 className="text-xs" />
+              <span>{langData.clear}</span>
+            </button>
+          </div>
 
-                        {msg.sender === 'bot' && !msg.isStreaming && (
-                          <button
-                            onClick={() => handleCopy(msg.id, msg.text)}
-                            className='absolute -top-2 right-2 rounded-md border border-slate-200 bg-white p-1 text-[10px] text-slate-500 opacity-0 shadow transition group-hover:opacity-100 hover:text-slate-900 dark:border-white/10 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-white'
-                            title='Copier'
-                          >
-                            {copiedId === msg.id ? <FiCheck className='text-emerald-500' /> : <FiCopy />}
-                          </button>
-                        )}
-                      </div>
-
-                      {msg.actions && msg.actions.length > 0 && !msg.isStreaming && (
-                        <div className='mt-2 flex flex-wrap gap-1.5'>
-                          {msg.actions.map((act, idx) => (
-                            <a
-                              key={idx}
-                              href={act.href.startsWith('/') ? publicAsset(act.href) : act.href}
-                              target={act.href.startsWith('http') || act.href.includes('.pdf') ? '_blank' : undefined}
-                              rel={act.href.includes('.pdf') ? 'noopener noreferrer' : undefined}
-                              onClick={() => {
-                                if (act.href.startsWith('#')) {
-                                  setIsOpen(false);
-                                }
-                              }}
-                              className='inline-flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-1 text-[11px] font-bold text-cyan-700 transition hover:bg-cyan-500 hover:text-white dark:text-cyan-300 dark:hover:bg-cyan-400 dark:hover:text-slate-950'
-                            >
-                              {act.type === 'cv' && <FiDownload className='text-xs' />}
-                              {act.type === 'mail' && <FiMail className='text-xs' />}
-                              {act.type === 'contact' && <TbSparkles className='text-xs' />}
-                              {act.label}
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-
-                  {isTyping && (
-                    <div className='flex items-center gap-1 text-[11px] font-medium text-slate-400'>
-                      <span className='h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500' />
-                      <span className='h-1.5 w-1.5 animate-bounce rounded-full bg-blue-500' style={{ animationDelay: '150ms' }} />
-                      <span className='h-1.5 w-1.5 animate-bounce rounded-full bg-violet-500' style={{ animationDelay: '300ms' }} />
-                      <span className='ml-1 text-[10px]'>Aria génère la réponse...</span>
-                    </div>
-                  )}
-
-                  <div ref={messagesEndRef} />
-                </div>
-
-                <div className='border-t border-slate-200/80 bg-slate-50/50 p-2.5 dark:border-white/5 dark:bg-white/5'>
-                  <div className='no-scrollbar flex gap-1.5 overflow-x-auto pb-1.5'>
-                    {langData.prompts.map((p, i) => (
-                      <button
-                        key={i}
-                        onClick={() => handleSend(p.query)}
-                        className='whitespace-nowrap rounded-full border border-slate-300/80 bg-white px-2.5 py-1 text-[11px] font-bold text-slate-700 transition hover:border-cyan-400 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:bg-cyan-950/40 dark:hover:text-cyan-200'
-                      >
-                        {p.label}
-                      </button>
-                    ))}
+          {/* Messages Scroll Area */}
+          <div className="h-72 sm:h-80 space-y-3 overflow-y-auto p-4 text-xs leading-relaxed sm:text-sm">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
+              >
+                <div
+                  className={`group relative max-w-[88%] rounded-2xl px-3.5 py-2.5 shadow-sm ${
+                    msg.sender === 'user'
+                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white'
+                      : 'border border-slate-200/80 bg-slate-50 text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-100'
+                  }`}
+                >
+                  <div className="whitespace-pre-line text-xs sm:text-[13px] leading-relaxed">
+                    {msg.text}
+                    {msg.isStreaming && (
+                      <span className="inline-block h-3 w-1 translate-y-0.5 animate-pulse bg-cyan-400 ml-1" />
+                    )}
                   </div>
 
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleSend();
-                    }}
-                    className='mt-1.5 flex items-center gap-1.5'
-                  >
-                    <input
-                      ref={inputRef}
-                      type='text'
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder={langData.placeholder}
-                      disabled={isTyping}
-                      className='flex-1 rounded-full border border-slate-300/80 bg-white px-3.5 py-2 text-xs text-slate-900 outline-none transition focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-white/15 dark:bg-slate-900 dark:text-white'
-                    />
+                  {msg.sender === 'bot' && !msg.isStreaming && (
                     <button
-                      type='submit'
-                      disabled={!input.trim() || isTyping}
-                      className='flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-40'
+                      onClick={() => handleCopy(msg.id, msg.text)}
+                      className="absolute -top-2 right-2 rounded border border-slate-200 bg-white p-1 text-[9px] text-slate-500 opacity-0 shadow transition group-hover:opacity-100 hover:text-slate-900 dark:border-white/10 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-white"
+                      title="Copier"
                     >
-                      <FiSend className='text-xs' />
+                      {copiedId === msg.id ? <FiCheck className="text-emerald-500" /> : <FiCopy />}
                     </button>
-                  </form>
+                  )}
                 </div>
+
+                {/* Direct Action Chips */}
+                {msg.actions && msg.actions.length > 0 && !msg.isStreaming && (
+                  <div className="mt-1.5 flex flex-wrap gap-1">
+                    {msg.actions.map((act, idx) => (
+                      <a
+                        key={idx}
+                        href={act.href.startsWith('/') ? publicAsset(act.href) : act.href}
+                        target={act.href.startsWith('http') || act.href.includes('.pdf') ? '_blank' : undefined}
+                        rel={act.href.includes('.pdf') ? 'noopener noreferrer' : undefined}
+                        className="inline-flex items-center gap-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2 py-0.5 text-[10px] font-bold text-cyan-700 transition hover:bg-cyan-500 hover:text-white dark:text-cyan-300 dark:hover:bg-cyan-400 dark:hover:text-slate-950"
+                      >
+                        {act.type === 'cv' && <FiDownload className="text-[10px]" />}
+                        {act.type === 'mail' && <FiMail className="text-[10px]" />}
+                        {act.type === 'contact' && <TbSparkles className="text-[10px]" />}
+                        {act.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {isTyping && (
+              <div className="flex items-center gap-1 text-[11px] font-medium text-slate-400">
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-500" />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-blue-500" style={{ animationDelay: '100ms' }} />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-violet-500" style={{ animationDelay: '200ms' }} />
+                <span className="ml-1 text-[10px]">Aria répond...</span>
               </div>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Quick Questions Chips & Input Bar */}
+          <div className="border-t border-slate-200/80 bg-slate-50/70 p-2.5 dark:border-white/5 dark:bg-white/5">
+            <div className="no-scrollbar flex gap-1 overflow-x-auto pb-2">
+              {langData.prompts.map((p, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSend(p.query)}
+                  className="whitespace-nowrap rounded-full border border-slate-300/80 bg-white px-2.5 py-1 text-[10px] font-bold text-slate-700 transition hover:border-cyan-400 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-cyan-400 dark:hover:bg-cyan-950/40 dark:hover:text-cyan-200"
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend();
+              }}
+              className="flex items-center gap-1.5"
+            >
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={langData.placeholder}
+                disabled={isTyping}
+                className="flex-1 rounded-full border border-slate-300/80 bg-white px-3.5 py-1.5 text-xs text-slate-900 outline-none transition focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-white/15 dark:bg-slate-900 dark:text-white"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isTyping}
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <FiSend className="text-[10px]" />
+              </button>
+            </form>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 }

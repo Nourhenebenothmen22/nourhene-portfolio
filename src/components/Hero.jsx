@@ -142,15 +142,14 @@ export default function Hero() {
                 <span>{t.hero.cv}</span>
               </a>
 
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new CustomEvent("open-ai-copilot"))}
-                className="group relative inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-5 py-3 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/20 dark:border-cyan-400/30 dark:bg-cyan-950/50 dark:text-cyan-200 dark:hover:bg-cyan-900/50 focus:outline-cyan-400"
+              <a
+                href="#ai-copilot"
+                className="group relative inline-flex items-center gap-2.5 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-5 py-3 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/20 dark:border-cyan-400/30 dark:bg-cyan-950/50 dark:text-cyan-200 dark:hover:bg-cyan-900/50 focus:outline-cyan-400"
               >
                 <TbSparkles className="text-base text-cyan-600 animate-pulse dark:text-cyan-300" />
                 <span>{language === "en" ? "Ask AI Copilot" : language === "ar" ? "اسأل المساعد الذكي" : "Poser une question à l'IA"}</span>
-                <span className="flex h-2 w-2 rounded-full bg-cyan-400" />
-              </button>
+                <FiArrowDown className="text-sm text-cyan-600 dark:text-cyan-300 animate-bounce group-hover:translate-y-1 transition-transform" />
+              </a>
 
               <a
                 href="#contact"
