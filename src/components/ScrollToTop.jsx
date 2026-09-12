@@ -38,7 +38,7 @@ export default function ScrollToTop() {
           exit={{ opacity: 0, scale: 0.7, y: 16 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
           aria-label="Scroll to top"
-          className={`fixed bottom-6 z-40 grid h-11 w-11 place-items-center rounded-full border border-blue-200/80 bg-white/90 text-electric shadow-xl shadow-blue-500/15 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 hover:text-white focus:outline-cyan-400 dark:border-cyan-400/25 dark:bg-navy/90 dark:text-cyan-300 dark:hover:text-white ${
+          className={`fixed bottom-22 sm:bottom-22 z-40 grid h-11 w-11 place-items-center rounded-full border border-blue-200/80 bg-white/90 text-electric shadow-xl shadow-blue-500/15 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 hover:text-white focus:outline-cyan-400 dark:border-cyan-400/25 dark:bg-navy/90 dark:text-cyan-300 dark:hover:text-white ${
             dir === "rtl" ? "left-6" : "right-6"
           }`}
         >

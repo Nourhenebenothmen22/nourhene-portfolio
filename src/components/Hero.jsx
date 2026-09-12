@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEnvelope, FaGithub, FaLinkedin, FaReact, FaYoutube } from "react-icons/fa6";
-import { FiArrowDown, FiDownload, FiSend } from "react-icons/fi";
-import { TbSparkles } from "react-icons/tb";
+import { FiDownload, FiSend } from "react-icons/fi";
+import { TbRobot, TbSparkles } from "react-icons/tb";
 import { SiFastapi, SiPostgresql, SiPython, SiTypescript } from "react-icons/si";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -142,14 +142,15 @@ export default function Hero() {
                 <span>{t.hero.cv}</span>
               </a>
 
-              <a
-                href="#ai-copilot"
-                className="group relative inline-flex items-center gap-2.5 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-5 py-3 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/20 dark:border-cyan-400/30 dark:bg-cyan-950/50 dark:text-cyan-200 dark:hover:bg-cyan-900/50 focus:outline-cyan-400"
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent("open-ai-copilot"))}
+                className="group relative inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-5 py-3 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/20 dark:border-cyan-400/30 dark:bg-cyan-950/50 dark:text-cyan-200 dark:hover:bg-cyan-900/50 focus:outline-cyan-400"
+                aria-label="Open AI Copilot"
               >
-                <TbSparkles className="text-base text-cyan-600 animate-pulse dark:text-cyan-300" />
+                <TbRobot className="text-lg text-cyan-600 dark:text-cyan-300 transition-transform group-hover:scale-110" />
                 <span>{language === "en" ? "Ask AI Copilot" : language === "ar" ? "اسأل المساعد الذكي" : "Poser une question à l'IA"}</span>
-                <FiArrowDown className="text-sm text-cyan-600 dark:text-cyan-300 animate-bounce group-hover:translate-y-1 transition-transform" />
-              </a>
+              </button>
 
               <a
                 href="#contact"
